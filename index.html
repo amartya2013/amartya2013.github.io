@@ -795,7 +795,7 @@
   </p>
   <div class="hero-stats">
     <div class="stat-item">
-      <span class="stat-num" id="total-kits">6</span>
+      <span class="stat-num" id="total-kits">2</span>
       <span class="stat-label">Kits Available</span>
     </div>
     <div class="stat-item">
@@ -890,26 +890,11 @@
     <div class="google-form-wrapper">
       <!-- REPLACE the src below with your Google Form embed URL -->
       <!-- Example: src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true" -->
-      <div class="form-placeholder">
-        <span class="form-placeholder-icon">[ ]</span>
-        <h3>Connect Your Google Form</h3>
-        <p>
-          Create a Google Form at <strong>forms.google.com</strong>, then replace the placeholder
-          in the HTML with your form's embed URL to activate this section.
-        </p>
-        <p>Look for this comment in the code:<br><code>&lt;!-- REPLACE the src below --&gt;</code></p>
-        <a href="https://forms.google.com" target="_blank" class="btn-primary" style="font-size:12px; padding:10px 24px;">
-          Create Google Form ↗
-        </a>
-      </div>
-      <!--
-      UNCOMMENT AND REPLACE when ready:
       <iframe
-        src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true"
+        src="https://docs.google.com/forms/d/e/1FAIpQLSfpCXNISVKKQwI-0Zmp_iu6NOoirSzZvcXL1dUezPYjmgABZA/viewform?embedded=true"
         frameborder="0" marginheight="0" marginwidth="0">
         Loading form...
       </iframe>
-      -->
     </div>
   </div>
 </section>
@@ -943,69 +928,25 @@
 const kits = [
   {
     id: 1,
-    name: "Arduino Sensor Explorer",
-    difficulty: "beginner",
-    deposit: 10,
-    available: true,
-    image: "https://images.unsplash.com/photo-1553406830-ef2513450d76?w=600&q=80",
-    videoUrl: "https://www.youtube.com/embed/09zfRunL8Nk",
-    desc: "Build your first circuits using temperature, light, and motion sensors. Perfect first project!",
-    components: ["Arduino Uno", "Breadboard", "Sensor Pack", "LEDs", "Jumper Wires"]
-  },
-  {
-    id: 2,
-    name: "Lego Mindstorms Robot",
+    name: "Lego Spike Prime",
     difficulty: "intermediate",
     deposit: 20,
     available: true,
     image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80",
     videoUrl: "https://www.youtube.com/embed/RIYV6PeYB3k",
-    desc: "Program a Lego robot to navigate mazes, follow lines, and respond to obstacles.",
-    components: ["Mindstorms Hub", "Motors x2", "Sensors", "Lego Bricks"]
+    desc: "Build and program robots and machines using Lego Spike Prime — drag-and-drop coding meets real motors and sensors.",
+    components: ["Spike Prime Hub", "Motors x3", "Sensors", "Lego Elements"]
   },
   {
-    id: 3,
-    name: "Sphero Code & Drive",
-    difficulty: "beginner",
-    deposit: 15,
-    available: true,
-    image: "https://images.unsplash.com/photo-1535378917042-10a22c95931a?w=600&q=80",
-    videoUrl: "https://www.youtube.com/embed/RtMLQ1SLXKY",
-    desc: "Program the Sphero ball to drive, light up colors, and complete fun coding challenges.",
-    components: ["Sphero Bolt", "Charging Base", "Obstacle Cones"]
-  },
-  {
-    id: 4,
-    name: "micro:bit Weather Station",
-    difficulty: "beginner",
-    deposit: 10,
-    available: false,
-    image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&q=80",
-    videoUrl: "https://www.youtube.com/embed/Z8A5dFfxFvc",
-    desc: "Build a real weather station that measures temperature, humidity, and shows data on the LED matrix.",
-    components: ["micro:bit v2", "USB Cable", "Battery Pack", "Sensors"]
-  },
-  {
-    id: 5,
-    name: "Arduino RC Car",
-    difficulty: "advanced",
-    deposit: 25,
-    available: true,
-    image: "https://images.unsplash.com/photo-1563396983906-b3795482a59a?w=600&q=80",
-    videoUrl: "https://www.youtube.com/embed/Vz0pHKuZs4E",
-    desc: "Build and program a remote-controlled car from scratch with Bluetooth and custom controls.",
-    components: ["Arduino Mega", "Motor Shield", "DC Motors x4", "BT Module", "Chassis Kit"]
-  },
-  {
-    id: 6,
-    name: "Lego WeDo Science Kit",
+    id: 2,
+    name: "SnapCircuit",
     difficulty: "beginner",
     deposit: 10,
     available: true,
-    image: "https://images.unsplash.com/photo-1566573636895-c78e41c1d3c4?w=600&q=80",
-    videoUrl: "https://www.youtube.com/embed/Uu_P2c3n5WQ",
-    desc: "Fun science projects with Lego WeDo — build a spinning windmill, swinging monkey, and more!",
-    components: ["WeDo 2.0 Hub", "Motors", "Sensors", "Lego Elements"]
+    image: "https://images.unsplash.com/photo-1553406830-ef2513450d76?w=600&q=80",
+    videoUrl: "https://www.youtube.com/embed/vwSUYrpUI_4",
+    desc: "Snap together real electronic components to build working circuits — lights, sounds, alarms and more. No soldering needed!",
+    components: ["Snap Circuit Board", "LED Modules", "Speaker", "Switch Pack", "Power Module"]
   }
 ];
 
