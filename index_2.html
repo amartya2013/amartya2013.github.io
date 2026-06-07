@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Innovation Library</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e0f;
+    --bg2: #0f1416;
+    --bg3: #141a1c;
+    --card: #111618;
+    --border: #1e2d30;
+    --border2: #2a3d42;
+    --accent: #00e5a0;
+    --accent2: #00b880;
+    --accent-dim: rgba(0,229,160,0.08);
+    --accent-dim2: rgba(0,229,160,0.15);
+    --text: #e8f0ee;
+    --text2: #8fa9a3;
+    --text3: #5a7a74;
+    --warn: #f0a500;
+    --warn-dim: rgba(240,165,0,0.12);
+    --red: #e05050;
+    --red-dim: rgba(224,80,80,0.12);
+    --mono: 'Share Tech Mono', monospace;
+    --body: 'Exo 2', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Circuit board background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Circuit node dots */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, var(--border2) 1.5px, transparent 1.5px);
+    background-size: 40px 40px;
+    background-position: 20px 20px;
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .content { position: relative; z-index: 1; }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,14,15,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border2);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-family: var(--mono);
+    font-size: 15px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .logo-sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text2);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #000 !important;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 600 !important;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 100px 2rem 80px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 4px 14px;
+    border-radius: 2px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    background: var(--accent-dim);
+  }
+
+  .hero h1 {
+    font-family: var(--mono);
+    font-size: clamp(2rem, 6vw, 3.8rem);
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero h1 span {
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    color: var(--text2);
+    line-height: 1.7;
+    max-width: 580px;
+    margin: 0 auto 40px;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 48px;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 2rem;
+    color: var(--accent);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: var(--mono);
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 14px 32px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--accent2); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    padding: 14px 32px;
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  /* SECTION */
+  section {
+    padding: 80px 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border-left: 2px solid var(--accent);
+    padding-left: 10px;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: var(--mono);
+    font-size: 1.6rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  /* FILTER BAR */
+  .filter-bar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+  }
+
+  .filter-btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 6px 16px;
+    border-radius: 2px;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  /* KIT GRID */
+  .kit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  /* KIT CARD */
+  .kit-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .kit-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+  }
+
+  .kit-card.available:hover {
+    border-color: var(--accent);
+  }
+
+  .kit-thumb {
+    position: relative;
+    aspect-ratio: 16/9;
+    background: var(--bg3);
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .kit-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+
+  .kit-thumb:hover img { opacity: 1; }
+
+  .play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .kit-thumb:hover .play-overlay { opacity: 1; }
+
+  .play-btn {
+    width: 48px; height: 48px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .play-btn svg {
+    width: 20px; height: 20px;
+    fill: #000;
+    margin-left: 3px;
+  }
+
+  .kit-status-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  .status-available {
+    background: rgba(0,229,160,0.2);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+
+  .status-borrowed {
+    background: var(--red-dim);
+    color: var(--red);
+    border: 1px solid var(--red);
+  }
+
+  .kit-body {
+    padding: 18px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .kit-name {
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .kit-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .difficulty-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .diff-beginner { background: rgba(0,229,160,0.12); color: var(--accent); }
+  .diff-intermediate { background: var(--warn-dim); color: var(--warn); }
+  .diff-advanced { background: var(--red-dim); color: var(--red); }
+
+  .kit-deposit {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text3);
+    margin-left: auto;
+  }
+
+  .kit-deposit span {
+    color: var(--warn);
+    font-weight: 600;
+  }
+
+  .kit-desc {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .kit-components {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .component-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.06em;
+  }
+
+  .kit-actions {
+    display: flex;
+    gap: 10px;
+    padding-top: 4px;
+  }
+
+  .btn-borrow {
+    flex: 1;
+    background: var(--accent);
+    color: #000;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.2s;
+  }
+
+  .btn-borrow:hover { background: var(--accent2); }
+
+  .btn-borrow.disabled {
+    background: var(--bg3);
+    color: var(--text3);
+    border: 1px solid var(--border);
+    cursor: not-allowed;
+  }
+
+  .btn-video {
+    background: var(--bg3);
+    color: var(--text2);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-video:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* HOW IT WORKS */
+  .how-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .how-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2px;
+  }
+
+  .step-card {
+    padding: 36px 28px;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+
+  .step-card:last-child { border-right: none; }
+
+  .step-num {
+    font-family: var(--mono);
+    font-size: 3rem;
+    color: var(--border2);
+    line-height: 1;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .step-title {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* FORM SECTION */
+  .form-container {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 40px;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .form-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .terminal-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+
+  .form-title {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text2);
+    letter-spacing: 0.05em;
+  }
+
+  .google-form-wrapper {
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+  }
+
+  .google-form-wrapper iframe {
+    width: 100%;
+    min-height: 600px;
+    border: none;
+    display: block;
+  }
+
+  .form-placeholder {
+    padding: 60px 40px;
+    text-align: center;
+  }
+
+  .form-placeholder-icon {
+    font-family: var(--mono);
+    font-size: 3rem;
+    color: var(--border2);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .form-placeholder h3 {
+    font-family: var(--mono);
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .form-placeholder p {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .form-placeholder code {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 2rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text3);
+    margin-bottom: 8px;
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  .footer-sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--card);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 720px;
+    overflow: hidden;
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modal-title {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--text3);
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 3px;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .modal-close:hover { color: var(--text); background: var(--bg3); }
+
+  .modal-body {
+    aspect-ratio: 16/9;
+    background: #000;
+  }
+
+  .modal-body iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .hero { padding: 60px 1rem 50px; }
+    .hero-stats { gap: 1.5rem; }
+    .hero-btns { flex-direction: column; align-items: center; }
+    section { padding: 50px 1rem; }
+    .step-card { border-right: none; border-bottom: 1px solid var(--border); }
+    .form-container { padding: 24px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="content">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="logo-icon"></div>
+    <div>
+      <div class="logo-text">INNOVATION LIBRARY</div>
+      <div class="logo-sub">Borrow · Build · Return</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#kits">Browse Kits</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#borrow" class="nav-cta">Borrow a Kit</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">// Innovation Library — Hardware Projects for Kids</div>
+  <h1>
+    Borrow. Build.
+    <span>Learn by Doing.</span>
+  </h1>
+  <p>
+    Innovation Library — a community hardware lending library run by a fellow maker kid.
+    Borrow real project kits with Arduino, Lego controllers, Sphero, micro:bit and more —
+    build something awesome, then pass it on.
+  </p>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <span class="stat-num" id="total-kits">6</span>
+      <span class="stat-label">Kits Available</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" id="available-count">5</span>
+      <span class="stat-label">Ready to Borrow</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">$0</span>
+      <span class="stat-label">Membership Fee</span>
+    </div>
+  </div>
+  <div class="hero-btns">
+    <a href="#kits" class="btn-primary">Browse All Kits</a>
+    <a href="#how" class="btn-secondary">How It Works</a>
+  </div>
+</div>
+
+<!-- KIT SECTION -->
+<section id="kits">
+  <div class="section-header">
+    <span class="section-label">// Inventory</span>
+    <h2 class="section-title">Project Kits</h2>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterKits('all', this)">All Kits</button>
+    <button class="filter-btn" onclick="filterKits('beginner', this)">Beginner</button>
+    <button class="filter-btn" onclick="filterKits('intermediate', this)">Intermediate</button>
+    <button class="filter-btn" onclick="filterKits('advanced', this)">Advanced</button>
+    <button class="filter-btn" onclick="filterKits('available', this)">Available Now</button>
+  </div>
+
+  <div class="kit-grid" id="kit-grid">
+    <!-- Cards injected by JS -->
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<div class="how-section" id="how">
+  <section style="padding: 70px 2rem;">
+    <div class="section-header">
+      <span class="section-label">// Process</span>
+      <h2 class="section-title">How It Works</h2>
+    </div>
+    <div class="how-steps">
+      <div class="step-card">
+        <span class="step-num">01</span>
+        <div class="step-title">Browse Kits</div>
+        <p class="step-desc">Check out available project kits. Watch demo videos to see what you'll build.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">02</span>
+        <div class="step-title">Fill the Form</div>
+        <p class="step-desc">Submit a borrow request below with the kit name and your contact info.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">03</span>
+        <div class="step-title">Pick Up Kit</div>
+        <p class="step-desc">Come to our home to pick up the kit and drop a security deposit. It's returned when you bring the kit back.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">04</span>
+        <div class="step-title">Build & Return</div>
+        <p class="step-desc">Build your project, have fun, and return the kit with all components. Deposit refunded!</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- BORROW FORM -->
+<section id="borrow">
+  <div class="section-header">
+    <span class="section-label">// Request</span>
+    <h2 class="section-title">Borrow a Kit</h2>
+  </div>
+
+  <div class="form-container">
+    <div class="form-header">
+      <div class="terminal-dot" style="background:#e05050"></div>
+      <div class="terminal-dot" style="background:#f0a500"></div>
+      <div class="terminal-dot" style="background:#00e5a0"></div>
+      <span class="form-title">borrow_request.form — submit to queue</span>
+    </div>
+
+    <!--
+      INSTRUCTIONS FOR AMARTYA:
+      1. Go to forms.google.com and create a new form
+      2. Add fields: Your Name, Parent Name, Email, Phone, Kit Name (dropdown), Borrow Date
+      3. Click Send → Embed → copy the iframe src URL
+      4. Replace YOUR_GOOGLE_FORM_ID below with your form's embed URL
+    -->
+    <div class="google-form-wrapper">
+      <!-- REPLACE the src below with your Google Form embed URL -->
+      <!-- Example: src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true" -->
+      <div class="form-placeholder">
+        <span class="form-placeholder-icon">[ ]</span>
+        <h3>Connect Your Google Form</h3>
+        <p>
+          Create a Google Form at <strong>forms.google.com</strong>, then replace the placeholder
+          in the HTML with your form's embed URL to activate this section.
+        </p>
+        <p>Look for this comment in the code:<br><code>&lt;!-- REPLACE the src below --&gt;</code></p>
+        <a href="https://forms.google.com" target="_blank" class="btn-primary" style="font-size:12px; padding:10px 24px;">
+          Create Google Form ↗
+        </a>
+      </div>
+      <!--
+      UNCOMMENT AND REPLACE when ready:
+      <iframe
+        src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true"
+        frameborder="0" marginheight="0" marginwidth="0">
+        Loading form...
+      </iframe>
+      -->
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    Made with ⚡ by <span>Amartya</span> — Innovation Library
+  </div>
+  <div class="footer-sub" style="margin-top:8px">
+    All kits picked up & returned in person · Deposit refunded on return
+  </div>
+</footer>
+
+</div><!-- .content -->
+
+<!-- VIDEO MODAL -->
+<div class="modal-overlay" id="video-modal" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-kit-name">Kit Demo</span>
+      <button class="modal-close" onclick="closeVideoModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <iframe id="modal-video" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+const kits = [
+  {
+    id: 1,
+    name: "Arduino Sensor Explorer",
+    difficulty: "beginner",
+    deposit: 10,
+    available: true,
+    image: "https://images.unsplash.com/photo-1553406830-ef2513450d76?w=600&q=80",
+    videoUrl: "https://www.youtube.com/embed/09zfRunL8Nk",
+    desc: "Build your first circuits using temperature, light, and motion sensors. Perfect first project!",
+    components: ["Arduino Uno", "Breadboard", "Sensor Pack", "LEDs", "Jumper Wires"]
+  },
+  {
+    id: 2,
+    name: "Lego Mindstorms Robot",
+    difficulty: "intermediate",
+    deposit: 20,
+    available: true,
+    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80",
+    videoUrl: "https://www.youtube.com/embed/RIYV6PeYB3k",
+    desc: "Program a Lego robot to navigate mazes, follow lines, and respond to obstacles.",
+    components: ["Mindstorms Hub", "Motors x2", "Sensors", "Lego Bricks"]
+  },
+  {
+    id: 3,
+    name: "Sphero Code & Drive",
+    difficulty: "beginner",
+    deposit: 15,
+    available: true,
+    image: "https://images.unsplash.com/photo-1535378917042-10a22c95931a?w=600&q=80",
+    videoUrl: "https://www.youtube.com/embed/RtMLQ1SLXKY",
+    desc: "Program the Sphero ball to drive, light up colors, and complete fun coding challenges.",
+    components: ["Sphero Bolt", "Charging Base", "Obstacle Cones"]
+  },
+  {
+    id: 4,
+    name: "micro:bit Weather Station",
+    difficulty: "beginner",
+    deposit: 10,
+    available: false,
+    image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&q=80",
+    videoUrl: "https://www.youtube.com/embed/Z8A5dFfxFvc",
+    desc: "Build a real weather station that measures temperature, humidity, and shows data on the LED matrix.",
+    components: ["micro:bit v2", "USB Cable", "Battery Pack", "Sensors"]
+  },
+  {
+    id: 5,
+    name: "Arduino RC Car",
+    difficulty: "advanced",
+    deposit: 25,
+    available: true,
+    image: "https://images.unsplash.com/photo-1563396983906-b3795482a59a?w=600&q=80",
+    videoUrl: "https://www.youtube.com/embed/Vz0pHKuZs4E",
+    desc: "Build and program a remote-controlled car from scratch with Bluetooth and custom controls.",
+    components: ["Arduino Mega", "Motor Shield", "DC Motors x4", "BT Module", "Chassis Kit"]
+  },
+  {
+    id: 6,
+    name: "Lego WeDo Science Kit",
+    difficulty: "beginner",
+    deposit: 10,
+    available: true,
+    image: "https://images.unsplash.com/photo-1566573636895-c78e41c1d3c4?w=600&q=80",
+    videoUrl: "https://www.youtube.com/embed/Uu_P2c3n5WQ",
+    desc: "Fun science projects with Lego WeDo — build a spinning windmill, swinging monkey, and more!",
+    components: ["WeDo 2.0 Hub", "Motors", "Sensors", "Lego Elements"]
+  }
+];
+
+function getYouTubeId(url) {
+  const match = url.match(/embed\/([^?]+)/);
+  return match ? match[1] : null;
+}
+
+function getThumbnail(videoUrl) {
+  const id = getYouTubeId(videoUrl);
+  return id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : null;
+}
+
+function renderKits(filter) {
+  const grid = document.getElementById('kit-grid');
+  const filtered = kits.filter(k => {
+    if (filter === 'all') return true;
+    if (filter === 'available') return k.available;
+    return k.difficulty === filter;
+  });
+
+  const availableCount = kits.filter(k => k.available).length;
+  document.getElementById('available-count').textContent = availableCount;
+
+  grid.innerHTML = filtered.map(kit => {
+    const thumb = getThumbnail(kit.videoUrl) || kit.image;
+    const statusClass = kit.available ? 'status-available' : 'status-borrowed';
+    const statusText = kit.available ? 'Available' : 'Borrowed';
+    const diffClass = `diff-${kit.difficulty}`;
+    const diffText = kit.difficulty.charAt(0).toUpperCase() + kit.difficulty.slice(1);
+    const cardClass = kit.available ? 'kit-card available' : 'kit-card';
+
+    return `
+    <div class="${cardClass}" data-id="${kit.id}">
+      <div class="kit-thumb" onclick="openVideo(${kit.id})">
+        <img src="${thumb}" alt="${kit.name}" onerror="this.src='${kit.image}'">
+        <div class="play-overlay">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+        <span class="kit-status-badge ${statusClass}">${statusText}</span>
+      </div>
+      <div class="kit-body">
+        <div class="kit-name">${kit.name}</div>
+        <div class="kit-meta">
+          <span class="difficulty-badge ${diffClass}">${diffText}</span>
+          <span class="kit-deposit">Deposit: <span>$${kit.deposit}</span></span>
+        </div>
+        <p class="kit-desc">${kit.desc}</p>
+        <div class="kit-components">
+          ${kit.components.map(c => `<span class="component-tag">${c}</span>`).join('')}
+        </div>
+        <div class="kit-actions">
+          ${kit.available
+            ? `<a href="#borrow" class="btn-borrow">Request to Borrow</a>`
+            : `<span class="btn-borrow disabled">Currently Borrowed</span>`
+          }
+          <button class="btn-video" onclick="openVideo(${kit.id})">▶ Demo</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterKits(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderKits(filter);
+}
+
+function openVideo(kitId) {
+  const kit = kits.find(k => k.id === kitId);
+  if (!kit) return;
+  document.getElementById('modal-kit-name').textContent = kit.name + ' — Demo';
+  document.getElementById('modal-video').src = kit.videoUrl + '?autoplay=1';
+  document.getElementById('video-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeVideoModal() {
+  document.getElementById('video-modal').classList.remove('open');
+  document.getElementById('modal-video').src = '';
+  document.body.style.overflow = '';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('video-modal')) closeVideoModal();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeVideoModal();
+});
+
+renderKits('all');
+</script>
+
+</body>
+</html>
