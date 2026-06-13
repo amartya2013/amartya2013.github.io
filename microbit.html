@@ -118,13 +118,13 @@
 
     <div class="gallery">
       <div class="main-photo" onclick="openLightbox(currentPhoto)">
-        <img id="main-img" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80" alt="micro:bit kit">
+        <img id="main-img" src="Microbit/M1.jpg" alt="micro:bit kit">
       </div>
       <div class="thumb-row">
-        <div class="thumb active" onclick="switchPhoto(0,this)"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80" alt="Photo 1"></div>
-        <div class="thumb" onclick="switchPhoto(1,this)"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&q=80" alt="Photo 2"></div>
-        <div class="thumb" onclick="switchPhoto(2,this)"><img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=300&q=80" alt="Photo 3"></div>
-        <div class="thumb" onclick="switchPhoto(3,this)"><img src="https://images.unsplash.com/photo-1553406830-ef2513450d76?w=300&q=80" alt="Photo 4"></div>
+        <div class="thumb active" onclick="switchPhoto(0,this)"><img src="Microbit/M1.jpg" alt="Photo 1"></div>
+        <div class="thumb" onclick="switchPhoto(1,this)"><img src="Microbit/M2.jpg" alt="Photo 2"></div>
+        <div class="thumb" onclick="switchPhoto(2,this)"><img src="Microbit/M3.jpg" alt="Photo 3"></div>
+        <div class="thumb" onclick="switchPhoto(3,this)"><img src="Microbit/M4.jpg" alt="Photo 4"></div>
       </div>
       <p style="font-family:var(--mono);font-size:10px;color:var(--text3);text-align:center;letter-spacing:0.08em;">// CLICK PHOTO TO ENLARGE</p>
     </div>
@@ -256,7 +256,7 @@
 </div>
 
 <script>
-const photos = ["https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80","https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&q=80","https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=300&q=80","https://images.unsplash.com/photo-1553406830-ef2513450d76?w=300&q=80"];
+const photos = ["Microbit/M1.jpg","Microbit/M2.jpg","Microbit/M3.jpg","Microbit/M4.jpg"];
 let currentPhoto = photos[0];
 function switchPhoto(i,el){
   currentPhoto=photos[i];
