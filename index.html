@@ -1048,7 +1048,7 @@ function renderKits(filter) {
 
     return `
     <div class="${cardClass}" data-id="${kit.id}" style="cursor:pointer;" onclick="window.location='${kit.page}'">
-      <div class="kit-thumb" onclick="event.stopPropagation();window.location='${kit.page}'")
+      <div class="kit-thumb" onclick="event.stopPropagation();window.location='${kit.page}'">
         <img src="${thumb}" alt="${kit.name}" onerror="this.src='${kit.image}'">
         <div class="play-overlay">
           <div class="play-btn">
