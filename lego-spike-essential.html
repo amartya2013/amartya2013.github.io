@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lego Spike Essential — Innovation Library</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0a0e0f;--bg2:#0f1416;--bg3:#141a1c;--card:#111618;
+    --border:#1e2d30;--border2:#2a3d42;--accent:#00e5a0;--accent2:#00b880;
+    --accent-dim:rgba(0,229,160,0.08);--text:#e8f0ee;--text2:#8fa9a3;
+    --text3:#5a7a74;--warn:#f0a500;--warn-dim:rgba(240,165,0,0.12);
+    --red:#e05050;--red-dim:rgba(224,80,80,0.12);
+    --mono:'Share Tech Mono',monospace;--body:'Exo 2',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:var(--body);min-height:100vh;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:40px 40px;opacity:0.3;pointer-events:none;z-index:0;}
+  body::after{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,var(--border2) 1.5px,transparent 1.5px);background-size:40px 40px;background-position:20px 20px;opacity:0.4;pointer-events:none;z-index:0;}
+  .content{position:relative;z-index:1;}
+  nav{position:sticky;top:0;z-index:100;background:rgba(10,14,15,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border2);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .logo-icon{width:32px;height:32px;background:var(--accent);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);flex-shrink:0;}
+  .logo-text{font-family:var(--mono);font-size:15px;color:var(--accent);letter-spacing:0.05em;}
+  .logo-sub{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;}
+  .back-btn{font-family:var(--mono);font-size:12px;color:var(--text2);text-decoration:none;border:1px solid var(--border2);padding:8px 16px;border-radius:4px;letter-spacing:0.06em;transition:all 0.2s;}
+  .back-btn:hover{color:var(--accent);border-color:var(--accent);}
+  .hero{padding:60px 2rem 0;max-width:1100px;margin:0 auto;}
+  .breadcrumb{font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:0.1em;margin-bottom:24px;}
+  .breadcrumb span{color:var(--accent);}
+  .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+  .gallery{display:flex;flex-direction:column;gap:12px;}
+  .main-photo{aspect-ratio:16/9;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;overflow:hidden;cursor:pointer;}
+  .main-photo img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s;}
+  .main-photo:hover img{transform:scale(1.03);}
+  .thumb-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+  .thumb{aspect-ratio:1;background:var(--bg3);border:1px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;transition:border-color 0.2s;}
+  .thumb.active{border-color:var(--accent);}
+  .thumb:hover{border-color:var(--border2);}
+  .thumb img{width:100%;height:100%;object-fit:cover;opacity:0.75;transition:opacity 0.2s;}
+  .thumb:hover img,.thumb.active img{opacity:1;}
+  .kit-info{display:flex;flex-direction:column;gap:24px;padding-top:8px;}
+  .kit-label{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;border-left:2px solid var(--accent);padding-left:10px;}
+  .kit-title{font-family:var(--mono);font-size:2.4rem;color:var(--text);line-height:1.1;letter-spacing:-0.01em;}
+  .badges{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .badge{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:4px 12px;border-radius:3px;}
+  .diff-beginner{background:rgba(0,229,160,0.12);color:var(--accent);border:1px solid var(--accent);}
+  .diff-intermediate{background:rgba(240,165,0,0.12);color:var(--warn);border:1px solid var(--warn);}
+  .diff-advanced{background:rgba(224,80,80,0.12);color:var(--red);border:1px solid var(--red);}
+  .badge-available{background:rgba(0,229,160,0.12);color:var(--accent);border:1px solid var(--accent);}
+  .description{font-size:15px;color:var(--text2);line-height:1.75;}
+  .info-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .info-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;}
+  .info-card-label{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;}
+  .info-card-value{font-family:var(--mono);font-size:16px;color:var(--text);font-weight:600;}
+  .info-card-value.green{color:var(--accent);}
+  .info-card-value.warn{color:var(--warn);}
+  .section-title{font-family:var(--mono);font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;}
+  .components{display:flex;flex-wrap:wrap;gap:8px;}
+  .component-tag{font-family:var(--mono);font-size:11px;color:var(--text2);background:var(--bg3);border:1px solid var(--border);padding:4px 12px;border-radius:3px;letter-spacing:0.06em;}
+  .rules{display:flex;flex-direction:column;gap:8px;}
+  .rule-row{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text2);}
+  .rule-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+  .actions{display:flex;gap:12px;}
+  .btn-primary{flex:1;background:var(--accent);color:#000;font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:14px;border:none;border-radius:4px;cursor:pointer;text-decoration:none;text-align:center;transition:background 0.2s;}
+  .btn-primary:hover{background:var(--accent2);}
+  .btn-secondary{background:transparent;color:var(--accent);font-family:var(--mono);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:14px 20px;border:1px solid var(--border2);border-radius:4px;cursor:pointer;text-decoration:none;text-align:center;transition:all 0.2s;}
+  .btn-secondary:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .video-section{max-width:1100px;margin:60px auto 0;padding:0 2rem;}
+  .video-header{display:flex;align-items:baseline;gap:16px;margin-bottom:20px;border-top:1px solid var(--border);padding-top:40px;}
+  .video-label{font-family:var(--mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.15em;border-left:2px solid var(--accent);padding-left:10px;}
+  .video-title{font-family:var(--mono);font-size:1.3rem;color:var(--text);}
+  .video-wrapper{aspect-ratio:16/9;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;overflow:hidden;cursor:pointer;position:relative;display:flex;align-items:center;justify-content:center;}
+  .video-wrapper img{width:100%;height:100%;object-fit:cover;opacity:0.7;}
+  .play-wrap{position:absolute;display:flex;flex-direction:column;align-items:center;gap:16px;}
+  .play-circle{width:72px;height:72px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(0,229,160,0.4);}
+  .deposit-section{max-width:1100px;margin:60px auto;padding:0 2rem 40px;}
+  .deposit-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:32px 36px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;}
+  .deposit-item{display:flex;flex-direction:column;gap:8px;}
+  .deposit-item-label{font-family:var(--mono);font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;}
+  .deposit-item-value{font-family:var(--mono);font-size:1.6rem;color:var(--warn);}
+  .deposit-item-desc{font-size:13px;color:var(--text2);line-height:1.5;}
+  .disclaimer-box{max-width:1100px;margin:0 auto;padding:0 2rem 20px;}
+  .disclaimer-inner{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:14px 20px;display:flex;align-items:flex-start;gap:10px;}
+  .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:1000;align-items:center;justify-content:center;padding:2rem;}
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:90vw;max-height:85vh;border-radius:8px;object-fit:contain;}
+  .lightbox-close{position:absolute;top:20px;right:24px;font-size:28px;color:var(--text2);cursor:pointer;background:none;border:none;transition:color 0.2s;}
+  footer{border-top:1px solid var(--border);padding:32px 2rem;text-align:center;}
+  .footer-text{font-family:var(--mono);font-size:12px;color:var(--text3);}
+  .footer-text span{color:var(--accent);}
+  @media(max-width:768px){
+    .hero-grid{grid-template-columns:1fr;gap:32px;}
+    .info-cards{grid-template-columns:1fr 1fr;}
+    .deposit-box{grid-template-columns:1fr;gap:20px;}
+    nav{padding:0 1rem;}
+  }
+</style>
+</head>
+<body>
+<div class="content">
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon"></div>
+    <div>
+      <div class="logo-text">INNOVATION LIBRARY</div>
+      <div class="logo-sub">Borrow · Build · Return</div>
+    </div>
+  </a>
+  <a href="index.html" class="back-btn">← Back to All Kits</a>
+</nav>
+
+<div class="hero">
+  <div class="breadcrumb">// Kits / <span>Lego Spike Essential</span></div>
+  <div class="hero-grid">
+
+    <div class="gallery">
+      <div class="main-photo" onclick="openLightbox(currentPhoto)">
+        <img id="main-img" src="https://images.unsplash.com/photo-1566573636895-c78e41c1d3c4?w=900&q=80" alt="Lego Spike Essential kit">
+      </div>
+      <div class="thumb-row">
+        <div class="thumb active" onclick="switchPhoto(0,this)"><img src="https://images.unsplash.com/photo-1566573636895-c78e41c1d3c4?w=900&q=80" alt="Photo 1"></div>
+        <div class="thumb" onclick="switchPhoto(1,this)"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=300&q=80" alt="Photo 2"></div>
+        <div class="thumb" onclick="switchPhoto(2,this)"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&q=80" alt="Photo 3"></div>
+        <div class="thumb" onclick="switchPhoto(3,this)"><img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=300&q=80" alt="Photo 4"></div>
+      </div>
+      <p style="font-family:var(--mono);font-size:10px;color:var(--text3);text-align:center;letter-spacing:0.08em;">// CLICK PHOTO TO ENLARGE</p>
+    </div>
+
+    <div class="kit-info">
+      <div class="kit-label">// Project Kit</div>
+      <h1 class="kit-title">Lego Spike Essential</h1>
+      <div class="badges">
+        <span class="badge diff-beginner">Beginner</span>
+        <span class="badge badge-available">Available</span>
+      </div>
+      <p class="description">LEGO SPIKE Essential combines colorful LEGO bricks with easy drag-and-drop coding. Build fun models like spinning animals, moving vehicles, and light-up creations — then bring them to life with code. Great for young makers just starting out!</p>
+      <div class="info-cards">
+        <div class="info-card">
+          <div class="info-card-label">Security Deposit</div>
+          <div class="info-card-value warn">$15</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Borrow Period</div>
+          <div class="info-card-value green">2 Weeks</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Difficulty</div>
+          <div class="info-card-value green">Beginner</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Age Range</div>
+          <div class="info-card-value">7+ years</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Projects</div>
+          <div class="info-card-value green">25+</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Pickup</div>
+          <div class="info-card-value">In Person</div>
+        </div>
+      </div>
+      <div>
+        <div class="section-title">// What's in the Kit</div>
+        <div class="components"><span class="component-tag">SPIKE Essential Hub</span><span class="component-tag">Motors x2</span><span class="component-tag">Color Sensor</span><span class="component-tag">Distance Sensor</span><span class="component-tag">LEGO Bricks Set</span><span class="component-tag">Project Guide</span></div>
+      </div>
+      <div>
+        <div class="section-title">// Borrow Rules</div>
+        <div class="rules"><div class="rule-row"><div class="rule-dot"></div>Return all LEGO pieces — count them before returning</div><div class="rule-row"><div class="rule-dot"></div>Maximum borrow period is 2 weeks</div><div class="rule-row"><div class="rule-dot"></div>$15 deposit refunded when kit is returned intact</div><div class="rule-row"><div class="rule-dot"></div>Pick up and return at our home in person</div><div class="rule-row"><div class="rule-dot"></div>Keep all bricks in the sorted tray provided</div></div>
+      </div>
+      <div class="actions">
+        <button class="btn-primary" onclick="document.getElementById('borrow-form').scrollIntoView({behavior:'smooth'})">Request to Borrow</button>
+        <a href="https://www.youtube.com/watch?v=3C0ox7KcxC4" target="_blank" class="btn-secondary">▶ Watch Demo</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="video-section">
+  <div class="video-header">
+    <span class="video-label">// Demo</span>
+    <h2 class="video-title">See Lego Spike Essential in Action</h2>
+  </div>
+  <div class="video-wrapper" onclick="window.open('https://www.youtube.com/watch?v=3C0ox7KcxC4','_blank')">
+    <img src="https://img.youtube.com/vi/3C0ox7KcxC4/maxresdefault.jpg" alt="Lego Spike Essential Demo">
+    <div class="play-wrap">
+      <div class="play-circle">
+        <svg viewBox="0 0 24 24" style="width:30px;height:30px;fill:#000;margin-left:4px"><polygon points="5,3 19,12 5,21"/></svg>
+      </div>
+      <span style="font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;">▶ Watch on YouTube</span>
+    </div>
+  </div>
+</div>
+
+<div class="deposit-section">
+  <div class="video-header">
+    <span class="video-label">// How Borrowing Works</span>
+    <h2 class="video-title">Simple & Fair</h2>
+  </div>
+  <div class="deposit-box">
+    <div class="deposit-item">
+      <div class="deposit-item-label">Security Deposit</div>
+      <div class="deposit-item-value">$15</div>
+      <div class="deposit-item-desc">A small deposit is collected at pickup. Fully refunded when all components are returned in good condition.</div>
+    </div>
+    <div class="deposit-item">
+      <div class="deposit-item-label">Borrow Duration</div>
+      <div class="deposit-item-value" style="color:var(--accent)">2 Weeks</div>
+      <div class="deposit-item-desc">You get 2 weeks to explore and build. Need more time? Contact us before the due date and we'll check availability.</div>
+    </div>
+    <div class="deposit-item">
+      <div class="deposit-item-label">Pickup & Return</div>
+      <div class="deposit-item-value" style="color:var(--text);font-size:1.1rem;padding-top:4px">In Person</div>
+      <div class="deposit-item-desc">Fill the borrow form below, then come to our home to pick up the kit. Return the same way with everything in the original box.</div>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer-box">
+  <div class="disclaimer-inner">
+    <span style="font-family:var(--mono);font-size:12px;color:var(--accent);flex-shrink:0;">⚠</span>
+    <p style="font-family:var(--mono);font-size:11px;color:var(--text3);line-height:1.6;letter-spacing:0.04em;">This project is not affiliated with or endorsed by LEGO®.</p>
+  </div>
+</div>
+
+<div class="deposit-section" id="borrow-form" style="padding-bottom:80px;">
+  <div class="video-header">
+    <span class="video-label">// Request</span>
+    <h2 class="video-title">Borrow This Kit</h2>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+    <div style="display:flex;align-items:center;gap:8px;padding:14px 20px;border-bottom:1px solid var(--border);">
+      <div style="width:10px;height:10px;border-radius:50%;background:#e05050;"></div>
+      <div style="width:10px;height:10px;border-radius:50%;background:#f0a500;"></div>
+      <div style="width:10px;height:10px;border-radius:50%;background:#00e5a0;"></div>
+      <span style="font-family:var(--mono);font-size:12px;color:var(--text2);margin-left:6px;letter-spacing:0.05em;">borrow_request.form — Lego Spike Essential</span>
+    </div>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfpCXNISVKKQwI-0Zmp_iu6NOoirSzZvcXL1dUezPYjmgABZA/viewform?embedded=true"
+      width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0" style="display:block;">Loading…</iframe>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-text">Made with ⚡ by <span>Amartya</span> — Innovation Library</div>
+  <div class="footer-text" style="margin-top:6px;font-size:10px;">All kits picked up & returned in person · Deposit refunded on return</div>
+</footer>
+
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+const photos = ["https://images.unsplash.com/photo-1566573636895-c78e41c1d3c4?w=900&q=80","https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=300&q=80","https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&q=80","https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=300&q=80"];
+let currentPhoto = photos[0];
+function switchPhoto(i,el){
+  currentPhoto=photos[i];
+  document.getElementById("main-img").src=currentPhoto;
+  document.querySelectorAll(".thumb").forEach(t=>t.classList.remove("active"));
+  el.classList.add("active");
+}
+function openLightbox(src){
+  document.getElementById("lightbox-img").src=src;
+  document.getElementById("lightbox").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+function closeLightbox(){
+  document.getElementById("lightbox").classList.remove("open");
+  document.body.style.overflow="";
+}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLightbox();});
+</script>
+</body>
+</html>
