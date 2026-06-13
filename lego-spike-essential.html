@@ -118,13 +118,13 @@
 
     <div class="gallery">
       <div class="main-photo" onclick="openLightbox(currentPhoto)">
-        <img id="main-img" src="https://images.unsplash.com/photo-1566573636895-c78e41c1d3c4?w=900&q=80" alt="Lego Spike Essential kit">
+        <img id="main-img" src="LegoEssential/SE1.jpg" alt="Lego Spike Essential kit">
       </div>
       <div class="thumb-row">
-        <div class="thumb active" onclick="switchPhoto(0,this)"><img src="https://images.unsplash.com/photo-1566573636895-c78e41c1d3c4?w=900&q=80" alt="Photo 1"></div>
-        <div class="thumb" onclick="switchPhoto(1,this)"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=300&q=80" alt="Photo 2"></div>
-        <div class="thumb" onclick="switchPhoto(2,this)"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&q=80" alt="Photo 3"></div>
-        <div class="thumb" onclick="switchPhoto(3,this)"><img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=300&q=80" alt="Photo 4"></div>
+        <div class="thumb active" onclick="switchPhoto(0,this)"><img src="LegoEssential/SE1.jpg" alt="Photo 1"></div>
+        <div class="thumb" onclick="switchPhoto(1,this)"><img src="LegoEssential/SE2.jpg" alt="Photo 2"></div>
+        <div class="thumb" onclick="switchPhoto(2,this)"><img src="LegoEssential/SE3.jpg" alt="Photo 3"></div>
+        <div class="thumb" onclick="switchPhoto(3,this)"><img src="LegoEssential/SE4.jpg" alt="Photo 4"></div>
       </div>
       <p style="font-family:var(--mono);font-size:10px;color:var(--text3);text-align:center;letter-spacing:0.08em;">// CLICK PHOTO TO ENLARGE</p>
     </div>
@@ -256,7 +256,7 @@
 </div>
 
 <script>
-const photos = ["https://images.unsplash.com/photo-1566573636895-c78e41c1d3c4?w=900&q=80","https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=300&q=80","https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&q=80","https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=300&q=80"];
+const photos = ["LegoEssential/SE1.jpg","LegoEssential/SE2.jpg","LegoEssential/SE3.jpg","LegoEssential/SE4.jpg"];
 let currentPhoto = photos[0];
 function switchPhoto(i,el){
   currentPhoto=photos[i];
