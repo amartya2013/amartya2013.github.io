@@ -1039,7 +1039,7 @@ function renderKits(filter) {
   document.getElementById('available-count').textContent = availableCount;
 
   grid.innerHTML = filtered.map(kit => {
-    const thumb = getThumbnail(kit.videoUrl) || kit.image;
+    const thumb = kit.image;
     const statusClass = kit.available ? 'status-available' : 'status-borrowed';
     const statusText = kit.available ? 'Available' : 'Borrowed';
     const diffClass = `diff-${kit.difficulty}`;
