@@ -854,15 +854,37 @@
       <div class="step-card">
         <span class="step-num">03</span>
         <div class="step-title">Pick Up Kit</div>
-        <p class="step-desc">Come to our home to pick up the kit and drop a security deposit. It's returned when you bring the kit back.</p>
+        <p class="step-desc">Come to our home to pick up the kit. Sign a simple pledge form confirming pickup and return dates.</p>
       </div>
       <div class="step-card">
         <span class="step-num">04</span>
         <div class="step-title">Build & Return</div>
-        <p class="step-desc">Build your project, have fun, and return the kit with all components. Deposit refunded!</p>
+        <p class="step-desc">Build your project, have fun, and return the kit with all components. Happy making! 🎉</p>
       </div>
     </div>
   </section>
+</div>
+
+<!-- TRUST BOX -->
+<div style="padding: 0 2rem 0;">
+  <div style="max-width:1100px;margin:0 auto;padding:40px 0;">
+    <div style="background:var(--accent-dim);border:1px solid var(--accent);border-radius:8px;padding:28px 32px;display:flex;gap:20px;align-items:flex-start;">
+      <span style="font-size:32px;flex-shrink:0;">💚</span>
+      <div>
+        <div style="font-family:var(--mono);font-size:15px;color:var(--accent);margin-bottom:8px;letter-spacing:0.04em;">We Trust You!</div>
+        <p style="font-size:14px;color:var(--text2);line-height:1.8;max-width:800px;">
+          Borrowing from Innovation Library is <strong style="color:var(--accent)">completely free</strong>.
+          Please take good care of all the components in the kit — handle them with care,
+          keep all parts together, and return everything in good condition.
+          We believe in the maker community and trust you to do the right thing! 🙌
+          <br><br>
+          <span style="font-family:var(--mono);font-size:12px;color:var(--text3);">
+            📋 When you pick up a kit you will sign a simple <strong style="color:var(--text)">Borrower's Pledge</strong> confirming the kit name, pickup date, return date, and that you agree to return all components in good condition. No fees, no deposit — just trust!
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- STATS SECTION -->
@@ -942,18 +964,16 @@ fetch(SHEET_URL)
     if (kidsEl) kidsEl.textContent = '0';
   });
 
-// ── GoatCounter: fetch visitor count ──────────────────────
-fetch('https://innovationlibrary.goatcounter.com/api/v0/stats/total', {
-  headers: { 'Accept': 'application/json' }
-})
-.then(r => r.json())
-.then(data => {
-  const total = data.total || data.count || 0;
-  document.getElementById('visitor-count').textContent = total.toLocaleString();
-})
-.catch(() => {
-  document.getElementById('visitor-count').textContent = '—';
-});
+// ── GoatCounter: fetch visitor count via public counter endpoint ──
+fetch('https://innovationlibrary.goatcounter.com/counter//.json')
+  .then(r => r.json())
+  .then(data => {
+    const total = data.count || 0;
+    document.getElementById('visitor-count').textContent = total.toLocaleString();
+  })
+  .catch(() => {
+    document.getElementById('visitor-count').textContent = '—';
+  });
 </script>
 
 <!-- BORROW FORM -->
@@ -996,7 +1016,7 @@ fetch('https://innovationlibrary.goatcounter.com/api/v0/stats/total', {
     Made with ⚡ by <span>Amartya</span> — Innovation Library
   </div>
   <div class="footer-sub" style="margin-top:8px">
-    All kits picked up & returned in person · Deposit refunded on return
+    All kits picked up & returned in person · Completely free to borrow · We trust you!
   </div>
   <div style="margin-top:16px;max-width:600px;margin-left:auto;margin-right:auto;">
     <p style="font-family:var(--mono);font-size:11px;color:var(--text3);line-height:1.6;letter-spacing:0.04em;">
@@ -1152,7 +1172,7 @@ function renderKits(filter) {
         <div class="kit-name">${kit.name}</div>
         <div class="kit-meta">
           <span class="difficulty-badge ${diffClass}">${diffText}</span>
-          <span class="kit-deposit">Deposit: <span>$${kit.deposit}</span></span>
+          <span class="kit-deposit">🆓 Free to Borrow</span>
         </div>
         <p class="kit-desc">${kit.desc}</p>
         <div class="kit-components">
