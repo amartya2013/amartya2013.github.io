@@ -865,6 +865,97 @@
   </section>
 </div>
 
+<!-- STATS SECTION -->
+<div style="background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 2rem;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:48px;">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.15em;border-left:2px solid var(--accent);padding-left:10px;">// Stats</span>
+      <h2 style="font-family:var(--mono);font-size:1.6rem;color:var(--text);">Innovation Library in Numbers</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:2px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+
+      <!-- STAT 1: Total Kits -->
+      <div style="background:var(--card);padding:32px 28px;display:flex;flex-direction:column;gap:8px;">
+        <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;">Total Kits</span>
+        <span style="font-family:var(--mono);font-size:3rem;color:var(--accent);line-height:1;">7</span>
+        <span style="font-size:12px;color:var(--text2);">Project kits available to borrow</span>
+      </div>
+
+      <!-- STAT 2: Times Borrowed — AUTO from Google Sheet -->
+      <div style="background:var(--card);padding:32px 28px;display:flex;flex-direction:column;gap:8px;">
+        <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;">Times Borrowed</span>
+        <span id="times-borrowed" style="font-family:var(--mono);font-size:3rem;color:var(--accent);line-height:1;">...</span>
+        <span style="font-size:12px;color:var(--text2);">Kits borrowed so far</span>
+      </div>
+
+      <!-- STAT 3: Kids Reached — AUTO from Google Sheet -->
+      <div style="background:var(--card);padding:32px 28px;display:flex;flex-direction:column;gap:8px;">
+        <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;">Kids Reached</span>
+        <span id="kids-reached" style="font-family:var(--mono);font-size:3rem;color:var(--accent);line-height:1;">...</span>
+        <span style="font-size:12px;color:var(--text2);">Kids who built something cool</span>
+      </div>
+
+      <!-- STAT 4: Live Visitor Count from GoatCounter -->
+      <div style="background:var(--card);padding:32px 28px;display:flex;flex-direction:column;gap:8px;">
+        <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;">Website Visitors</span>
+        <span id="visitor-count" style="font-family:var(--mono);font-size:3rem;color:var(--accent);line-height:1;">...</span>
+        <span style="font-size:12px;color:var(--text2);">People who visited our site</span>
+      </div>
+
+    </div>
+    <p style="font-family:var(--mono);font-size:10px;color:var(--text3);text-align:center;margin-top:16px;letter-spacing:0.08em;">
+      // Visitor count via GoatCounter · Borrow stats live from Google Sheets
+    </p>
+  </div>
+</div>
+
+<script>
+// ── Google Sheets: fetch borrow stats ──────────────────────
+const SHEET_ID = '1GjlS3NGUoOhRciBRx2S0u4F_hsoZkCmXRv6J0twuqhU';
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+fetch(SHEET_URL)
+  .then(r => r.text())
+  .then(text => {
+    // Google wraps response in /*O_o*/ google.visualization.Query.setResponse({...});
+    const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
+    const rows = json.table.rows;
+
+    // Times Borrowed = total rows (each row = one borrow request)
+    const timesBorrowed = rows.length;
+
+    // Kids Reached = count of unique kid names (column index 1 = Kid's Name)
+    const uniqueKids = new Set(rows.map(r => r.c[1]?.v?.trim().toLowerCase()).filter(Boolean));
+    const kidsReached = uniqueKids.size;
+
+    // Update the stats on the page
+    const borrowEl = document.getElementById('times-borrowed');
+    const kidsEl = document.getElementById('kids-reached');
+    if (borrowEl) borrowEl.textContent = timesBorrowed;
+    if (kidsEl) kidsEl.textContent = kidsReached;
+  })
+  .catch(() => {
+    // If sheet not yet public or error, show 0
+    const borrowEl = document.getElementById('times-borrowed');
+    const kidsEl = document.getElementById('kids-reached');
+    if (borrowEl) borrowEl.textContent = '0';
+    if (kidsEl) kidsEl.textContent = '0';
+  });
+
+// ── GoatCounter: fetch visitor count ──────────────────────
+fetch('https://innovationlibrary.goatcounter.com/api/v0/stats/total', {
+  headers: { 'Accept': 'application/json' }
+})
+.then(r => r.json())
+.then(data => {
+  const total = data.total || data.count || 0;
+  document.getElementById('visitor-count').textContent = total.toLocaleString();
+})
+.catch(() => {
+  document.getElementById('visitor-count').textContent = '—';
+});
+</script>
+
 <!-- BORROW FORM -->
 <section id="borrow">
   <div class="section-header">
@@ -1072,7 +1163,7 @@ function renderKits(filter) {
             ? `<a href="${kit.page}" class="btn-borrow">View & Borrow</a>`
             : `<span class="btn-borrow disabled">Currently Borrowed</span>`
           }
-          <button class="btn-video" onclick="openVideo(${kit.id})">▶ Demo</button>
+          <button class="btn-video" onclick="event.stopPropagation();openVideo(${kit.id})">▶ Demo</button>
         </div>
       </div>
     </div>`;
@@ -1110,5 +1201,6 @@ document.addEventListener('keydown', e => {
 renderKits('all');
 </script>
 
+<script data-goatcounter="https://innovationlibrary.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
