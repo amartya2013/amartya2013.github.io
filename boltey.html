@@ -139,8 +139,8 @@
       <p class="description">Boltey is a friendly little coding robot perfect for the youngest makers! It uses simple button-based coding — no screen needed. Press buttons to program movements, lights, and sounds. A wonderful first step into robotics and computational thinking for kids ages 6 and up!</p>
       <div class="info-cards">
         <div class="info-card">
-          <div class="info-card-label">Security Deposit</div>
-          <div class="info-card-value warn">$10</div>
+          <div class="info-card-label">Borrowing Fee</div>
+          <div class="info-card-value green">FREE</div>
         </div>
         <div class="info-card">
           <div class="info-card-label">Borrow Period</div>
@@ -169,7 +169,7 @@
       </div>
       <div>
         <div class="section-title">// Borrow Rules</div>
-        <div class="rules"><div class="rule-row"><div class="rule-dot"></div>Return Boltey and all activity cards</div><div class="rule-row"><div class="rule-dot"></div>Maximum borrow period is 2 weeks</div><div class="rule-row"><div class="rule-dot"></div>$10 deposit refunded when kit is returned intact</div><div class="rule-row"><div class="rule-dot"></div>Pick up and return at our home in person</div><div class="rule-row"><div class="rule-dot"></div>Return fully charged if possible</div></div>
+        <div class="rules"><div class="rule-row"><div class="rule-dot"></div>Return Boltey and all activity cards</div><div class="rule-row"><div class="rule-dot"></div>Maximum borrow period is 2 weeks</div><div class="rule-row"><div class="rule-dot"></div>Borrowing is completely free — we trust you!</div><div class="rule-row"><div class="rule-dot"></div>Pick up and return at our home in person</div><div class="rule-row"><div class="rule-dot"></div>Return fully charged if possible</div></div>
       </div>
       <div class="actions">
         <button class="btn-primary" onclick="document.getElementById('borrow-form').scrollIntoView({behavior:'smooth'})">Request to Borrow</button>
@@ -200,12 +200,48 @@
     <span class="video-label">// How Borrowing Works</span>
     <h2 class="video-title">Simple & Fair</h2>
   </div>
+  <!-- Trust statement -->
+  <div style="background:var(--accent-dim);border:1px solid var(--accent);border-radius:8px;padding:24px 28px;margin-bottom:24px;display:flex;gap:16px;align-items:flex-start;">
+    <span style="font-size:24px;">💚</span>
+    <div>
+      <div style="font-family:var(--mono);font-size:14px;color:var(--accent);margin-bottom:6px;letter-spacing:0.04em;">We Trust You!</div>
+      <p style="font-size:14px;color:var(--text2);line-height:1.7;">
+        Borrowing from Innovation Library is <strong style="color:var(--accent)">completely free</strong>. 
+        Please take good care of all the components in the kit — handle them with care, 
+        keep all parts together, and return everything in good condition. 
+        We believe in the maker community and trust you to do the right thing! 🙌
+      </p>
+    </div>
+  </div>
+
   <div class="deposit-box">
     <div class="deposit-item">
-      <div class="deposit-item-label">Security Deposit</div>
-      <div class="deposit-item-value">$10</div>
-      <div class="deposit-item-desc">A small deposit is collected at pickup. Fully refunded when all components are returned in good condition.</div>
+      <div class="deposit-item-label">Borrowing Fee</div>
+      <div class="deposit-item-value" style="color:var(--accent)">FREE</div>
+      <div class="deposit-item-desc">No deposit, no fees. Borrowing is completely free for everyone in the community.</div>
     </div>
+    <div class="deposit-item">
+      <div class="deposit-item-label">Borrow Duration</div>
+      <div class="deposit-item-value" style="color:var(--accent)">2 Weeks</div>
+      <div class="deposit-item-desc">You get 2 weeks to explore and build. Need more time? Contact us before the due date and we'll check availability.</div>
+    </div>
+    <div class="deposit-item">
+      <div class="deposit-item-label">Pickup & Return</div>
+      <div class="deposit-item-value" style="color:var(--text);font-size:1.1rem;padding-top:4px">In Person</div>
+      <div class="deposit-item-desc">Come to our home to pick up the kit. Sign a simple pledge form confirming the pickup date, return date, and that you'll return all components. Return the same way!</div>
+    </div>
+  </div>
+
+  <!-- Pledge note -->
+  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-top:16px;display:flex;gap:12px;align-items:flex-start;">
+    <span style="font-family:var(--mono);font-size:14px;color:var(--warn);flex-shrink:0;">📋</span>
+    <p style="font-family:var(--mono);font-size:11px;color:var(--text2);line-height:1.7;letter-spacing:0.03em;">
+      When you pick up the kit you will sign a simple <strong style="color:var(--text)">Borrower's Pledge</strong> confirming:
+      the kit name, pickup date, return date, and that you agree to return all components in good condition.
+      That's it — no fees, no deposit, just trust! 🤝
+    </p>
+  </div>
+  
     <div class="deposit-item">
       <div class="deposit-item-label">Borrow Duration</div>
       <div class="deposit-item-value" style="color:var(--accent)">2 Weeks</div>
@@ -245,7 +281,7 @@
 
 <footer>
   <div class="footer-text">Made with ⚡ by <span>Amartya</span> — Innovation Library</div>
-  <div class="footer-text" style="margin-top:6px;font-size:10px;">All kits picked up & returned in person · Deposit refunded on return</div>
+  <div class="footer-text" style="margin-top:6px;font-size:10px;">All kits picked up & returned in person · Completely free to borrow · We trust you!</div>
 </footer>
 
 </div>
