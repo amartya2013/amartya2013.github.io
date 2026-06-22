@@ -807,6 +807,10 @@
       <span class="stat-num">$0</span>
       <span class="stat-label">Membership Fee</span>
     </div>
+    <div class="stat-item">
+      <span class="stat-num" id="hero-visitor-count">...</span>
+      <span class="stat-label">Website Visitors</span>
+    </div>
   </div>
   <div class="hero-btns">
     <a href="#kits" class="btn-primary">Browse All Kits</a>
@@ -975,10 +979,14 @@ fetch('https://innovationlibrary.goatcounter.com/counter//.json')
     // data.count is a formatted string like "1,234"
     const count = data.count_unique || data.count || '0';
     document.getElementById('visitor-count').textContent = count;
+    const heroEl = document.getElementById('hero-visitor-count');
+    if (heroEl) heroEl.textContent = count;
   })
   .catch(() => {
     // Fallback: hide the visitor stat gracefully
     document.getElementById('visitor-count').textContent = '—';
+    const heroEl = document.getElementById('hero-visitor-count');
+    if (heroEl) heroEl.textContent = '—';
   });
 </script>
 
