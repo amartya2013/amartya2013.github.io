@@ -6,759 +6,761 @@
 <title>Innovation Library</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0e0f;
-    --bg2: #0f1416;
-    --bg3: #141a1c;
-    --card: #111618;
-    --border: #1e2d30;
-    --border2: #2a3d42;
-    --accent: #00e5a0;
-    --accent2: #00b880;
-    --accent-dim: rgba(0,229,160,0.08);
-    --accent-dim2: rgba(0,229,160,0.15);
-    --text: #e8f0ee;
-    --text2: #8fa9a3;
-    --text3: #5a7a74;
-    --warn: #f0a500;
-    --warn-dim: rgba(240,165,0,0.12);
-    --red: #e05050;
-    --red-dim: rgba(224,80,80,0.12);
-    --mono: 'Share Tech Mono', monospace;
-    --body: 'Exo 2', sans-serif;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--body);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* Circuit board background */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(var(--border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size: 40px 40px;
-    opacity: 0.3;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Circuit node dots */
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: radial-gradient(circle, var(--border2) 1.5px, transparent 1.5px);
-    background-size: 40px 40px;
-    background-position: 20px 20px;
-    opacity: 0.4;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .content { position: relative; z-index: 1; }
-
-  /* NAV */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(10,14,15,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border2);
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-  }
-
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .logo-icon {
-    width: 36px; height: 36px;
-    border-radius: 8px;
-    object-fit: cover;
-    flex-shrink: 0;
-  }
-
-  .logo-text {
-    font-family: var(--mono);
-    font-size: 15px;
-    color: var(--accent);
-    letter-spacing: 0.05em;
-  }
-
-  .logo-sub {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--text3);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text2);
-    text-decoration: none;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--accent); }
-
-  .nav-cta {
-    background: var(--accent);
-    color: #000 !important;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-weight: 600 !important;
-  }
-
-  /* HERO */
-  .hero {
-    padding: 100px 2rem 80px;
-    max-width: 900px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .hero-badge {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--accent);
-    border: 1px solid var(--accent);
-    padding: 4px 14px;
-    border-radius: 2px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 28px;
-    background: var(--accent-dim);
-  }
-
-  .hero h1 {
-    font-family: var(--mono);
-    font-size: clamp(2rem, 6vw, 3.8rem);
-    line-height: 1.1;
-    color: var(--text);
-    margin-bottom: 24px;
-    letter-spacing: -0.02em;
-  }
-
-  .hero h1 span {
-    color: var(--accent);
-    display: block;
-  }
-
-  .hero p {
-    font-size: 1.1rem;
-    color: var(--text2);
-    line-height: 1.7;
-    max-width: 580px;
-    margin: 0 auto 40px;
-  }
-
-  .hero-stats {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-    margin-bottom: 48px;
-  }
-
-  .stat-item {
-    text-align: center;
-  }
-
-  .stat-num {
-    font-family: var(--mono);
-    font-size: 2rem;
-    color: var(--accent);
-    display: block;
-  }
-
-  .stat-label {
-    font-size: 12px;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-family: var(--mono);
-  }
-
-  .hero-btns {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #000;
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    padding: 14px 32px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background 0.2s, transform 0.1s;
-    display: inline-block;
-  }
-
-  .btn-primary:hover { background: var(--accent2); }
-
-  .btn-secondary {
-    background: transparent;
-    color: var(--accent);
-    font-family: var(--mono);
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    padding: 14px 32px;
-    border: 1px solid var(--border2);
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: border-color 0.2s, background 0.2s;
-    display: inline-block;
-  }
-
-  .btn-secondary:hover {
-    border-color: var(--accent);
-    background: var(--accent-dim);
-  }
-
-  /* SECTION */
-  section {
-    padding: 80px 2rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    margin-bottom: 48px;
-  }
-
-  .section-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    border-left: 2px solid var(--accent);
-    padding-left: 10px;
-    flex-shrink: 0;
-  }
-
-  .section-title {
-    font-family: var(--mono);
-    font-size: 1.6rem;
-    color: var(--text);
-    letter-spacing: -0.01em;
-  }
-
-  /* FILTER BAR */
-  .filter-bar {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 36px;
-  }
-
-  .filter-btn {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text2);
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 6px 16px;
-    border-radius: 2px;
-    cursor: pointer;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: all 0.2s;
-  }
-
-  .filter-btn:hover, .filter-btn.active {
-    color: var(--accent);
-    border-color: var(--accent);
-    background: var(--accent-dim);
-  }
-
-  /* KIT GRID */
-  .kit-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-  }
-
-  /* KIT CARD */
-  .kit-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
-    transition: border-color 0.2s, transform 0.2s;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .kit-card:hover {
-    border-color: var(--border2);
-    transform: translateY(-2px);
-  }
-
-  .kit-card.available:hover {
-    border-color: var(--accent);
-  }
-
-  .kit-thumb {
-    position: relative;
-    aspect-ratio: 16/9;
-    background: var(--bg3);
-    overflow: hidden;
-    cursor: pointer;
-  }
-
-  .kit-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.85;
-    transition: opacity 0.2s;
-  }
-
-  .kit-thumb:hover img { opacity: 1; }
-
-  .play-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.4);
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
-  .kit-thumb:hover .play-overlay { opacity: 1; }
-
-  .play-btn {
-    width: 48px; height: 48px;
-    background: var(--accent);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .play-btn svg {
-    width: 20px; height: 20px;
-    fill: #000;
-    margin-left: 3px;
-  }
-
-  .kit-status-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 2px;
-  }
-
-  .status-available {
-    background: rgba(0,229,160,0.2);
-    color: var(--accent);
-    border: 1px solid var(--accent);
-  }
-
-  .status-borrowed {
-    background: var(--red-dim);
-    color: var(--red);
-    border: 1px solid var(--red);
-  }
-
-  .kit-body {
-    padding: 18px 20px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .kit-name {
-    font-family: var(--mono);
-    font-size: 1rem;
-    color: var(--text);
-    letter-spacing: 0.02em;
-  }
-
-  .kit-meta {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-  }
-
-  .difficulty-badge {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 2px;
-  }
-
-  .diff-beginner { background: rgba(0,229,160,0.12); color: var(--accent); }
-  .diff-intermediate { background: var(--warn-dim); color: var(--warn); }
-  .diff-advanced { background: var(--red-dim); color: var(--red); }
-
-  .kit-deposit {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text3);
-    margin-left: auto;
-  }
-
-  .kit-deposit span {
-    color: var(--warn);
-    font-weight: 600;
-  }
-
-  .kit-desc {
-    font-size: 13px;
-    color: var(--text2);
-    line-height: 1.6;
-    flex: 1;
-  }
-
-  .kit-components {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .component-tag {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--text3);
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    padding: 2px 8px;
-    border-radius: 2px;
-    letter-spacing: 0.06em;
-  }
-
-  .kit-actions {
-    display: flex;
-    gap: 10px;
-    padding-top: 4px;
-  }
-
-  .btn-borrow {
-    flex: 1;
-    background: var(--accent);
-    color: #000;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 10px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-    transition: background 0.2s;
-  }
-
-  .btn-borrow:hover { background: var(--accent2); }
-
-  .btn-borrow.disabled {
-    background: var(--bg3);
-    color: var(--text3);
-    border: 1px solid var(--border);
-    cursor: not-allowed;
-  }
-
-  .btn-video {
-    background: var(--bg3);
-    color: var(--text2);
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 10px 14px;
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-
-  .btn-video:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  /* HOW IT WORKS */
-  .how-section {
-    background: var(--bg2);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .how-steps {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2px;
-  }
-
-  .step-card {
-    padding: 36px 28px;
-    border-right: 1px solid var(--border);
-    position: relative;
-  }
-
-  .step-card:last-child { border-right: none; }
-
-  .step-num {
-    font-family: var(--mono);
-    font-size: 3rem;
-    color: var(--border2);
-    line-height: 1;
-    margin-bottom: 16px;
-    display: block;
-  }
-
-  .step-title {
-    font-family: var(--mono);
-    font-size: 14px;
-    color: var(--accent);
-    letter-spacing: 0.05em;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-  }
-
-  .step-desc {
-    font-size: 13px;
-    color: var(--text2);
-    line-height: 1.6;
-  }
-
-  /* FORM SECTION */
-  .form-container {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 40px;
-    max-width: 780px;
-    margin: 0 auto;
-  }
-
-  .form-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 28px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .terminal-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-  }
-
-  .form-title {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--text2);
-    letter-spacing: 0.05em;
-  }
-
-  .google-form-wrapper {
-    width: 100%;
-    border-radius: 4px;
-    overflow: hidden;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-  }
-
-  .google-form-wrapper iframe {
-    width: 100%;
-    min-height: 600px;
-    border: none;
-    display: block;
-  }
-
-  .form-placeholder {
-    padding: 60px 40px;
-    text-align: center;
-  }
-
-  .form-placeholder-icon {
-    font-family: var(--mono);
-    font-size: 3rem;
-    color: var(--border2);
-    margin-bottom: 20px;
-    display: block;
-  }
-
-  .form-placeholder h3 {
-    font-family: var(--mono);
-    font-size: 16px;
-    color: var(--text);
-    margin-bottom: 12px;
-  }
-
-  .form-placeholder p {
-    font-size: 13px;
-    color: var(--text2);
-    line-height: 1.6;
-    margin-bottom: 24px;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .form-placeholder code {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--accent);
-    background: var(--accent-dim);
-    padding: 2px 8px;
-    border-radius: 3px;
-  }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 40px 2rem;
-    text-align: center;
-  }
-
-  .footer-logo {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--text3);
-    margin-bottom: 8px;
-  }
-
-  .footer-logo span { color: var(--accent); }
-
-  .footer-sub {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text3);
-    letter-spacing: 0.08em;
-  }
-
-  /* MODAL */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.8);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-  }
-
-  .modal-overlay.open { display: flex; }
-
-  .modal {
-    background: var(--card);
-    border: 1px solid var(--border2);
-    border-radius: 8px;
-    width: 100%;
-    max-width: 720px;
-    overflow: hidden;
-  }
-
-  .modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .modal-title {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--accent);
-    letter-spacing: 0.05em;
-  }
-
-  .modal-close {
-    background: none;
-    border: none;
-    color: var(--text3);
-    cursor: pointer;
-    font-size: 20px;
-    line-height: 1;
-    padding: 4px 8px;
-    border-radius: 3px;
-    transition: color 0.2s, background 0.2s;
-  }
-
-  .modal-close:hover { color: var(--text); background: var(--bg3); }
-
-  .modal-body {
-    aspect-ratio: 16/9;
-    background: #000;
-  }
-
-  .modal-body iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
-  }
-
-  @media (max-width: 640px) {
-    nav { padding: 0 1rem; }
-    .nav-links { display: none; }
-    .hero { padding: 60px 1rem 50px; }
-    .hero-stats { gap: 1.5rem; }
-    .hero-btns { flex-direction: column; align-items: center; }
-    section { padding: 50px 1rem; }
-    .step-card { border-right: none; border-bottom: 1px solid var(--border); }
-    .form-container { padding: 24px 16px; }
-  }
+ :root {
+ --bg: #0a0f1f;
+ --bg2: #0d1428;
+ --bg3: #121c38;
+ --card: #101a33;
+ --border: #1e3a5f;
+ --border2: #2d4d7a;
+ --accent: #4d9fff;
+ --accent2: #3a7fd6;
+ --accent-dim: rgba(77,159,255,0.10);
+ --accent-dim2: rgba(77,159,255,0.18);
+ --text: #e8eef8;
+ --text2: #9fb3d0;
+ --text3: #5f7aa0;
+ --warn: #f0a500;
+ --warn-dim: rgba(240,165,0,0.12);
+ --red: #e05050;
+ --red-dim: rgba(224,80,80,0.12);
+ --mono: Verdana, Geneva, sans-serif;
+ --body: Verdana, Geneva, sans-serif;
+ }
+
+ * { box-sizing: border-box; margin: 0; padding: 0; }
+
+ body {
+ background: var(--bg);
+ color: var(--text);
+ font-family: var(--body);
+ min-height: 100vh;
+ overflow-x: hidden;
+ }
+
+ /* Circuit board background */
+ body::before {
+ content: '';
+ position: fixed;
+ inset: 0;
+ background-image:
+ linear-gradient(var(--border) 1px, transparent 1px),
+ linear-gradient(90deg, var(--border) 1px, transparent 1px);
+ background-size: 40px 40px;
+ opacity: 0.3;
+ pointer-events: none;
+ z-index: 0;
+ }
+
+ /* Circuit node dots */
+ body::after {
+ content: '';
+ position: fixed;
+ inset: 0;
+ background-image: radial-gradient(circle, var(--border2) 1.5px, transparent 1.5px);
+ background-size: 40px 40px;
+ background-position: 20px 20px;
+ opacity: 0.4;
+ pointer-events: none;
+ z-index: 0;
+ }
+
+ .content { position: relative; z-index: 1; }
+
+ /* NAV */
+ nav {
+ position: sticky;
+ top: 0;
+ z-index: 100;
+ background: rgba(10,14,15,0.92);
+ backdrop-filter: blur(12px);
+ border-bottom: 1px solid var(--border2);
+ padding: 0 2rem;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ height: 64px;
+ }
+
+ .nav-logo {
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ }
+
+ .logo-icon {
+ width: 36px; height: 36px;
+ border-radius: 16px;
+ object-fit: cover;
+ flex-shrink: 0;
+ }
+
+ .logo-text {
+ font-family: var(--mono);
+ font-size: 15px;
+ color: var(--accent);
+ letter-spacing: 0.05em;
+ }
+
+ .logo-sub {
+ font-family: var(--mono);
+ font-size: 10px;
+ color: var(--text3);
+ letter-spacing: 0.1em;
+ text-transform: uppercase;
+ }
+
+ .nav-links {
+ display: flex;
+ gap: 2rem;
+ list-style: none;
+ }
+
+ .nav-links a {
+ font-family: var(--mono);
+ font-size: 12px;
+ color: var(--text2);
+ text-decoration: none;
+ letter-spacing: 0.08em;
+ text-transform: uppercase;
+ transition: color 0.2s;
+ }
+
+ .nav-links a:hover { color: var(--accent); }
+
+ .nav-cta {
+ background: var(--accent);
+ color: #000 !important;
+ padding: 8px 16px;
+ border-radius: 10px;
+ font-weight: 600 !important;
+ }
+
+ /* HERO */
+ .hero {
+ padding: 100px 2rem 80px;
+ max-width: 900px;
+ margin: 0 auto;
+ text-align: center;
+ }
+
+ .hero-badge {
+ display: inline-block;
+ font-family: var(--mono);
+ font-size: 11px;
+ color: var(--accent);
+ border: 1px solid var(--accent);
+ padding: 4px 14px;
+ border-radius: 6px;
+ letter-spacing: 0.15em;
+ text-transform: uppercase;
+ margin-bottom: 28px;
+ background: var(--accent-dim);
+ }
+
+ .hero h1 {
+ font-family: var(--mono);
+ font-size: clamp(2rem, 6vw, 3.8rem);
+ line-height: 1.1;
+ color: var(--text);
+ margin-bottom: 24px;
+ letter-spacing: -0.02em;
+ }
+
+ .hero h1 span {
+ color: var(--accent);
+ display: block;
+ }
+
+ .hero p {
+ font-size: 1.1rem;
+ color: var(--text2);
+ line-height: 1.7;
+ max-width: 580px;
+ margin: 0 auto 40px;
+ }
+
+ .hero-stats {
+ display: flex;
+ justify-content: center;
+ gap: 3rem;
+ margin-bottom: 48px;
+ }
+
+ .stat-item {
+ text-align: center;
+ }
+
+ .stat-num {
+ font-family: var(--mono);
+ font-size: 2rem;
+ color: var(--accent);
+ display: block;
+ }
+
+ .stat-label {
+ font-size: 12px;
+ color: var(--text3);
+ text-transform: uppercase;
+ letter-spacing: 0.1em;
+ font-family: var(--mono);
+ }
+
+ .hero-btns {
+ display: flex;
+ gap: 16px;
+ justify-content: center;
+ }
+
+ .btn-primary {
+ background: var(--accent);
+ color: #000;
+ font-family: var(--mono);
+ font-size: 13px;
+ font-weight: 600;
+ letter-spacing: 0.08em;
+ padding: 14px 32px;
+ border: none;
+ border-radius: 10px;
+ cursor: pointer;
+ text-decoration: none;
+ transition: background 0.2s, transform 0.1s;
+ display: inline-block;
+ }
+
+ .btn-primary:hover { background: var(--accent2); }
+
+ .btn-secondary {
+ background: transparent;
+ color: var(--accent);
+ font-family: var(--mono);
+ font-size: 13px;
+ letter-spacing: 0.08em;
+ padding: 14px 32px;
+ border: 1px solid var(--border2);
+ border-radius: 10px;
+ cursor: pointer;
+ text-decoration: none;
+ transition: border-color 0.2s, background 0.2s;
+ display: inline-block;
+ }
+
+ .btn-secondary:hover {
+ border-color: var(--accent);
+ background: var(--accent-dim);
+ }
+
+ /* SECTION */
+ section {
+ padding: 80px 2rem;
+ max-width: 1100px;
+ margin: 0 auto;
+ }
+
+ .section-header {
+ display: flex;
+ align-items: baseline;
+ gap: 16px;
+ margin-bottom: 48px;
+ }
+
+ .section-label {
+ font-family: var(--mono);
+ font-size: 11px;
+ color: var(--accent);
+ text-transform: uppercase;
+ letter-spacing: 0.15em;
+ border-left: 2px solid var(--accent);
+ padding-left: 10px;
+ flex-shrink: 0;
+ }
+
+ .section-title {
+ font-family: var(--mono);
+ font-size: 1.6rem;
+ color: var(--text);
+ letter-spacing: -0.01em;
+ }
+
+ /* FILTER BAR */
+ .filter-bar {
+ display: flex;
+ gap: 10px;
+ flex-wrap: wrap;
+ margin-bottom: 36px;
+ }
+
+ .filter-btn {
+ font-family: var(--mono);
+ font-size: 11px;
+ color: var(--text2);
+ background: var(--card);
+ border: 1px solid var(--border);
+ padding: 6px 16px;
+ border-radius: 6px;
+ cursor: pointer;
+ letter-spacing: 0.08em;
+ text-transform: uppercase;
+ transition: all 0.2s;
+ }
+
+ .filter-btn:hover, .filter-btn.active {
+ color: var(--accent);
+ border-color: var(--accent);
+ background: var(--accent-dim);
+ }
+
+ /* KIT GRID */
+ .kit-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+ gap: 20px;
+ }
+
+ /* KIT CARD */
+ .kit-card {
+ background: var(--card);
+ border: 1px solid var(--border);
+ border-radius: 14px;
+ overflow: hidden;
+ transition: border-color 0.2s, transform 0.2s;
+ display: flex;
+ flex-direction: column;
+ }
+
+ .kit-card:hover {
+ border-color: var(--border2);
+ transform: translateY(-2px);
+ }
+
+ .kit-card.available:hover {
+ border-color: var(--accent);
+ }
+
+ .kit-thumb {
+ position: relative;
+ aspect-ratio: 16/9;
+ background: var(--bg3);
+ overflow: hidden;
+ cursor: pointer;
+ }
+
+ .kit-thumb img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ opacity: 0.85;
+ transition: opacity 0.2s;
+ }
+
+ .kit-thumb:hover img { opacity: 1; }
+
+ .play-overlay {
+ position: absolute;
+ inset: 0;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ background: rgba(0,0,0,0.4);
+ opacity: 0;
+ transition: opacity 0.2s;
+ }
+
+ .kit-thumb:hover .play-overlay { opacity: 1; }
+
+ .play-btn {
+ width: 48px; height: 48px;
+ background: var(--accent);
+ border-radius: 50%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ }
+
+ .play-btn svg {
+ width: 20px; height: 20px;
+ fill: #000;
+ margin-left: 3px;
+ }
+
+ .kit-status-badge {
+ position: absolute;
+ top: 10px;
+ right: 10px;
+ font-family: var(--mono);
+ font-size: 10px;
+ letter-spacing: 0.1em;
+ text-transform: uppercase;
+ padding: 4px 10px;
+ border-radius: 6px;
+ }
+
+ .status-available {
+ background: rgba(77,159,255,0.2);
+ color: var(--accent);
+ border: 1px solid var(--accent);
+ }
+
+ .status-borrowed {
+ background: var(--red-dim);
+ color: var(--red);
+ border: 1px solid var(--red);
+ }
+
+ .kit-body {
+ padding: 18px 20px;
+ flex: 1;
+ display: flex;
+ flex-direction: column;
+ gap: 12px;
+ }
+
+ .kit-name {
+ font-family: var(--mono);
+ font-size: 1rem;
+ color: var(--text);
+ letter-spacing: 0.02em;
+ }
+
+ .kit-meta {
+ display: flex;
+ gap: 12px;
+ align-items: center;
+ }
+
+ .difficulty-badge {
+ font-family: var(--mono);
+ font-size: 10px;
+ letter-spacing: 0.08em;
+ text-transform: uppercase;
+ padding: 3px 8px;
+ border-radius: 6px;
+ }
+
+ .diff-beginner { background: rgba(77,159,255,0.12); color: var(--accent); }
+ .diff-intermediate { background: var(--warn-dim); color: var(--warn); }
+ .diff-advanced { background: var(--red-dim); color: var(--red); }
+
+ .kit-deposit {
+ font-family: var(--mono);
+ font-size: 12px;
+ color: var(--text3);
+ margin-left: auto;
+ }
+
+ .kit-deposit span {
+ color: var(--warn);
+ font-weight: 600;
+ }
+
+ .kit-desc {
+ font-size: 13px;
+ color: var(--text2);
+ line-height: 1.6;
+ flex: 1;
+ }
+
+ .kit-components {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 6px;
+ }
+
+ .component-tag {
+ font-family: var(--mono);
+ font-size: 10px;
+ color: var(--text3);
+ background: var(--bg3);
+ border: 1px solid var(--border);
+ padding: 2px 8px;
+ border-radius: 6px;
+ letter-spacing: 0.06em;
+ }
+
+ .kit-actions {
+ display: flex;
+ gap: 10px;
+ padding-top: 4px;
+ }
+
+ .btn-borrow {
+ flex: 1;
+ background: var(--accent);
+ color: #000;
+ font-family: var(--mono);
+ font-size: 11px;
+ font-weight: 600;
+ letter-spacing: 0.1em;
+ text-transform: uppercase;
+ padding: 10px;
+ border: none;
+ border-radius: 8px;
+ cursor: pointer;
+ text-decoration: none;
+ text-align: center;
+ transition: background 0.2s;
+ }
+
+ .btn-borrow:hover { background: var(--accent2); }
+
+ .btn-borrow.disabled {
+ background: var(--bg3);
+ color: var(--text3);
+ border: 1px solid var(--border);
+ cursor: not-allowed;
+ }
+
+ .btn-video {
+ background: var(--bg3);
+ color: var(--text2);
+ font-family: var(--mono);
+ font-size: 11px;
+ letter-spacing: 0.08em;
+ text-transform: uppercase;
+ padding: 10px 14px;
+ border: 1px solid var(--border);
+ border-radius: 8px;
+ cursor: pointer;
+ text-decoration: none;
+ text-align: center;
+ transition: all 0.2s;
+ white-space: nowrap;
+ }
+
+ .btn-video:hover {
+ border-color: var(--accent);
+ color: var(--accent);
+ }
+
+ /* HOW IT WORKS */
+ .how-section {
+ background: var(--bg2);
+ border-top: 1px solid var(--border);
+ border-bottom: 1px solid var(--border);
+ }
+
+ .how-steps {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ gap: 2px;
+ }
+
+ .step-card {
+ padding: 36px 28px;
+ border-right: 1px solid var(--border);
+ position: relative;
+ }
+
+ .step-card:last-child { border-right: none; }
+
+ .step-num {
+ font-family: var(--mono);
+ font-size: 3rem;
+ color: var(--border2);
+ line-height: 1;
+ margin-bottom: 16px;
+ display: block;
+ }
+
+ .step-title {
+ font-family: var(--mono);
+ font-size: 14px;
+ color: var(--accent);
+ letter-spacing: 0.05em;
+ margin-bottom: 10px;
+ text-transform: uppercase;
+ }
+
+ .step-desc {
+ font-size: 13px;
+ color: var(--text2);
+ line-height: 1.6;
+ }
+
+ /* FORM SECTION */
+ .form-container {
+ background: var(--card);
+ border: 1px solid var(--border);
+ border-radius: 14px;
+ padding: 40px;
+ max-width: 780px;
+ margin: 0 auto;
+ }
+
+ .form-header {
+ display: flex;
+ align-items: center;
+ gap: 12px;
+ margin-bottom: 28px;
+ padding-bottom: 20px;
+ border-bottom: 1px solid var(--border);
+ }
+
+ .terminal-dot {
+ width: 10px; height: 10px;
+ border-radius: 50%;
+ }
+
+ .form-title {
+ font-family: var(--mono);
+ font-size: 13px;
+ color: var(--text2);
+ letter-spacing: 0.05em;
+ }
+
+ .google-form-wrapper {
+ width: 100%;
+ border-radius: 14px;
+ overflow: hidden;
+ background: #fff;
+ border: 1px solid var(--border);
+ position: relative;
+ z-index: 2;
+ }
+
+ .google-form-wrapper iframe {
+ width: 100%;
+ min-height: 600px;
+ border: none;
+ display: block;
+ }
+
+ .form-placeholder {
+ padding: 60px 40px;
+ text-align: center;
+ }
+
+ .form-placeholder-icon {
+ font-family: var(--mono);
+ font-size: 3rem;
+ color: var(--border2);
+ margin-bottom: 20px;
+ display: block;
+ }
+
+ .form-placeholder h3 {
+ font-family: var(--mono);
+ font-size: 16px;
+ color: var(--text);
+ margin-bottom: 12px;
+ }
+
+ .form-placeholder p {
+ font-size: 13px;
+ color: var(--text2);
+ line-height: 1.6;
+ margin-bottom: 24px;
+ max-width: 400px;
+ margin-left: auto;
+ margin-right: auto;
+ }
+
+ .form-placeholder code {
+ font-family: var(--mono);
+ font-size: 12px;
+ color: var(--accent);
+ background: var(--accent-dim);
+ padding: 2px 8px;
+ border-radius: 8px;
+ }
+
+ /* FOOTER */
+ footer {
+ border-top: 1px solid var(--border);
+ padding: 40px 2rem;
+ text-align: center;
+ }
+
+ .footer-logo {
+ font-family: var(--mono);
+ font-size: 13px;
+ color: var(--text3);
+ margin-bottom: 8px;
+ }
+
+ .footer-logo span { color: var(--accent); }
+
+ .footer-sub {
+ font-family: var(--mono);
+ font-size: 11px;
+ color: var(--text3);
+ letter-spacing: 0.08em;
+ }
+
+ /* MODAL */
+ .modal-overlay {
+ display: none;
+ position: fixed;
+ inset: 0;
+ background: rgba(0,0,0,0.8);
+ z-index: 1000;
+ align-items: center;
+ justify-content: center;
+ padding: 2rem;
+ }
+
+ .modal-overlay.open { display: flex; }
+
+ .modal {
+ background: var(--card);
+ border: 1px solid var(--border2);
+ border-radius: 16px;
+ width: 100%;
+ max-width: 720px;
+ overflow: hidden;
+ }
+
+ .modal-header {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding: 16px 20px;
+ border-bottom: 1px solid var(--border);
+ }
+
+ .modal-title {
+ font-family: var(--mono);
+ font-size: 13px;
+ color: var(--accent);
+ letter-spacing: 0.05em;
+ }
+
+ .modal-close {
+ background: none;
+ border: none;
+ color: var(--text3);
+ cursor: pointer;
+ font-size: 20px;
+ line-height: 1;
+ padding: 4px 8px;
+ border-radius: 8px;
+ transition: color 0.2s, background 0.2s;
+ }
+
+ .modal-close:hover { color: var(--text); background: var(--bg3); }
+
+ .modal-body {
+ aspect-ratio: 16/9;
+ background: #000;
+ }
+
+ .modal-body iframe {
+ width: 100%;
+ height: 100%;
+ border: none;
+ display: block;
+ }
+
+ @media (max-width: 640px) {
+ nav { padding: 0 1rem; }
+ .nav-links { display: none; }
+ .hero { padding: 60px 1rem 50px; }
+ .hero-stats { gap: 1.5rem; }
+ .hero-btns { flex-direction: column; align-items: center; }
+ section { padding: 50px 1rem; }
+ .step-card { border-right: none; border-bottom: 1px solid var(--border); }
+ .form-container { padding: 24px 16px; }
+ }
 </style>
 </head>
 <body>
@@ -766,220 +768,220 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">
-    <img src="logo.jpg" alt="Innovation Library logo" class="logo-icon">
-    <div>
-      <div class="logo-text">INNOVATION LIBRARY</div>
-      <div class="logo-sub">Borrow · Build · Return</div>
-    </div>
-  </div>
-  <ul class="nav-links">
-    <li><a href="#kits">Browse Kits</a></li>
-    <li><a href="#how">How It Works</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#borrow" class="nav-cta">Borrow a Kit</a></li>
-  </ul>
+ <div class="nav-logo">
+ <img src="logo.jpg" alt="Innovation Library logo" class="logo-icon">
+ <div>
+ <div class="logo-text">INNOVATION LIBRARY</div>
+ <div class="logo-sub">Borrow · Build · Return</div>
+ </div>
+ </div>
+ <ul class="nav-links">
+ <li><a href="#kits">Browse Kits</a></li>
+ <li><a href="#how">How It Works</a></li>
+ <li><a href="#contact">Contact</a></li>
+ <li><a href="#borrow" class="nav-cta">Borrow a Kit</a></li>
+ </ul>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-badge">// Innovation Library — Hardware Projects for Kids</div>
-  <h1>
-    Borrow. Build.
-    <span>Learn by Doing.</span>
-  </h1>
-  <p>
-    Innovation Library — a community hardware lending library run by a fellow maker kid.
-    Borrow real project kits with Arduino, Lego controllers, Sphero, micro:bit and more —
-    build something awesome, then pass it on.
-  </p>
-  <div class="hero-stats">
-    <div class="stat-item">
-      <span class="stat-num" id="total-kits">9</span>
-      <span class="stat-label">Kits Available</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num" id="available-count">5</span>
-      <span class="stat-label">Ready to Borrow</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">$0</span>
-      <span class="stat-label">Membership Fee</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num" id="hero-visitor-count">...</span>
-      <span class="stat-label">Website Visitors</span>
-    </div>
-  </div>
-  <div class="hero-btns">
-    <a href="#kits" class="btn-primary">Browse All Kits</a>
-    <a href="#how" class="btn-secondary">How It Works</a>
-  </div>
+ <div class="hero-badge">// Innovation Library — Hardware Projects for Kids</div>
+ <h1>
+ Borrow. Build.
+ <span>Learn by Doing.</span>
+ </h1>
+ <p>
+ Innovation Library — a community hardware lending library run by a fellow maker kid.
+ Borrow real project kits with Arduino, Lego controllers, Sphero, micro:bit and more —
+ build something awesome, then pass it on.
+ </p>
+ <div class="hero-stats">
+ <div class="stat-item">
+ <span class="stat-num" id="total-kits">9</span>
+ <span class="stat-label">Kits Available</span>
+ </div>
+ <div class="stat-item">
+ <span class="stat-num" id="available-count">5</span>
+ <span class="stat-label">Ready to Borrow</span>
+ </div>
+ <div class="stat-item">
+ <span class="stat-num">$0</span>
+ <span class="stat-label">Membership Fee</span>
+ </div>
+ <div class="stat-item">
+ <span class="stat-num" id="hero-visitor-count">...</span>
+ <span class="stat-label">Website Visitors</span>
+ </div>
+ </div>
+ <div class="hero-btns">
+ <a href="#kits" class="btn-primary">Browse All Kits</a>
+ <a href="#how" class="btn-secondary">How It Works</a>
+ </div>
 </div>
 
 <!-- INTRO VIDEO SECTION -->
 <section id="intro">
-  <div class="section-header">
-    <span class="section-label">// Watch</span>
-    <h2 class="section-title">Welcome to Innovation Library</h2>
-  </div>
-  <div onclick="window.open('https://www.youtube.com/watch?v=GXVp8vuqZzo','_blank')" style="max-width:900px;margin:0 auto;aspect-ratio:16/9;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;overflow:hidden;cursor:pointer;position:relative;display:flex;align-items:center;justify-content:center;">
-    <img src="https://img.youtube.com/vi/GXVp8vuqZzo/hqdefault.jpg" style="width:100%;height:100%;object-fit:cover;opacity:0.7;" alt="Innovation Library intro video">
-    <div style="position:absolute;display:flex;flex-direction:column;align-items:center;gap:16px;">
-      <div style="width:80px;height:80px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(0,229,160,0.5);">
-        <svg viewBox="0 0 24 24" style="width:34px;height:34px;fill:#000;margin-left:4px"><polygon points="5,3 19,12 5,21"/></svg>
-      </div>
-      <span style="font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;">▶ Watch on YouTube</span>
-    </div>
-  </div>
+ <div class="section-header">
+ <span class="section-label">// Watch</span>
+ <h2 class="section-title">Welcome to Innovation Library</h2>
+ </div>
+ <div onclick="window.open('https://www.youtube.com/watch?v=GXVp8vuqZzo','_blank')" style="max-width:900px;margin:0 auto;aspect-ratio:16/9;background:var(--bg3);border:1px solid var(--border2);border-radius: 16px;overflow:hidden;cursor:pointer;position:relative;display:flex;align-items:center;justify-content:center;">
+ <img src="https://img.youtube.com/vi/GXVp8vuqZzo/hqdefault.jpg" style="width:100%;height:100%;object-fit:cover;opacity:0.7;" alt="Innovation Library intro video">
+ <div style="position:absolute;display:flex;flex-direction:column;align-items:center;gap:16px;">
+ <div style="width:80px;height:80px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(77,159,255,0.5);">
+ <svg viewBox="0 0 24 24" style="width:34px;height:34px;fill:#000;margin-left:4px"><polygon points="5,3 19,12 5,21"/></svg>
+ </div>
+ <span style="font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;">▶ Watch on YouTube</span>
+ </div>
+ </div>
 </section>
 
 <!-- KIT SECTION -->
 <section id="kits">
-  <div class="section-header">
-    <span class="section-label">// Inventory</span>
-    <h2 class="section-title">Project Kits</h2>
-  </div>
+ <div class="section-header">
+ <span class="section-label">// Inventory</span>
+ <h2 class="section-title">Project Kits</h2>
+ </div>
 
-  <!-- Search box -->
-  <div style="margin-bottom:20px;">
-    <input type="text" id="kit-search" placeholder="🔍  Search kits by name..."
-      oninput="applyFilters()"
-      style="width:100%;max-width:400px;font-family:var(--mono);font-size:13px;color:var(--text);background:var(--card);border:1px solid var(--border);border-radius:4px;padding:12px 16px;letter-spacing:0.04em;outline:none;">
-  </div>
+ <!-- Search box -->
+ <div style="margin-bottom:20px;">
+ <input type="text" id="kit-search" placeholder=" Search kits by name..."
+ oninput="applyFilters()"
+ style="width:100%;max-width:400px;font-family:var(--mono);font-size:13px;color:var(--text);background:var(--card);border:1px solid var(--border);border-radius: 10px;padding:12px 16px;letter-spacing:0.04em;outline:none;">
+ </div>
 
-  <!-- Difficulty filter -->
-  <div style="margin-bottom:14px;">
-    <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;margin-right:12px;">Difficulty:</span>
-    <div class="filter-bar" style="display:inline-flex;margin-bottom:0;">
-      <button class="filter-btn active" data-difficulty="all" onclick="setDifficulty('all', this)">All</button>
-      <button class="filter-btn" data-difficulty="beginner" onclick="setDifficulty('beginner', this)">Beginner</button>
-      <button class="filter-btn" data-difficulty="intermediate" onclick="setDifficulty('intermediate', this)">Intermediate</button>
-      <button class="filter-btn" data-difficulty="advanced" onclick="setDifficulty('advanced', this)">Advanced</button>
-    </div>
-  </div>
+ <!-- Difficulty filter -->
+ <div style="margin-bottom:14px;">
+ <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;margin-right:12px;">Difficulty:</span>
+ <div class="filter-bar" style="display:inline-flex;margin-bottom:0;">
+ <button class="filter-btn active" data-difficulty="all" onclick="setDifficulty('all', this)">All</button>
+ <button class="filter-btn" data-difficulty="beginner" onclick="setDifficulty('beginner', this)">Beginner</button>
+ <button class="filter-btn" data-difficulty="intermediate" onclick="setDifficulty('intermediate', this)">Intermediate</button>
+ <button class="filter-btn" data-difficulty="advanced" onclick="setDifficulty('advanced', this)">Advanced</button>
+ </div>
+ </div>
 
-  <!-- Age filter -->
-  <div style="margin-bottom:14px;">
-    <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;margin-right:12px;">Age:</span>
-    <div class="filter-bar" style="display:inline-flex;margin-bottom:0;">
-      <button class="filter-btn active" data-age="all" onclick="setAge('all', this)">All Ages</button>
-      <button class="filter-btn" data-age="5" onclick="setAge('5', this)">5-7</button>
-      <button class="filter-btn" data-age="8" onclick="setAge('8', this)">8-10</button>
-      <button class="filter-btn" data-age="11" onclick="setAge('11', this)">11-14</button>
-    </div>
-  </div>
+ <!-- Age filter -->
+ <div style="margin-bottom:14px;">
+ <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;margin-right:12px;">Age:</span>
+ <div class="filter-bar" style="display:inline-flex;margin-bottom:0;">
+ <button class="filter-btn active" data-age="all" onclick="setAge('all', this)">All Ages</button>
+ <button class="filter-btn" data-age="5" onclick="setAge('5', this)">5-7</button>
+ <button class="filter-btn" data-age="8" onclick="setAge('8', this)">8-10</button>
+ <button class="filter-btn" data-age="11" onclick="setAge('11', this)">11-14</button>
+ </div>
+ </div>
 
-  <!-- Availability filter -->
-  <div style="margin-bottom:36px;">
-    <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;margin-right:12px;">Status:</span>
-    <div class="filter-bar" style="display:inline-flex;margin-bottom:0;">
-      <button class="filter-btn active" data-avail="all" onclick="setAvail('all', this)">All</button>
-      <button class="filter-btn" data-avail="available" onclick="setAvail('available', this)">Available Now</button>
-    </div>
-  </div>
+ <!-- Availability filter -->
+ <div style="margin-bottom:36px;">
+ <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;margin-right:12px;">Status:</span>
+ <div class="filter-bar" style="display:inline-flex;margin-bottom:0;">
+ <button class="filter-btn active" data-avail="all" onclick="setAvail('all', this)">All</button>
+ <button class="filter-btn" data-avail="available" onclick="setAvail('available', this)">Available Now</button>
+ </div>
+ </div>
 
-  <div class="kit-grid" id="kit-grid">
-    <!-- Cards injected by JS -->
-  </div>
+ <div class="kit-grid" id="kit-grid">
+ <!-- Cards injected by JS -->
+ </div>
 </section>
 
 <!-- HOW IT WORKS -->
 <div class="how-section" id="how">
-  <section style="padding: 70px 2rem;">
-    <div class="section-header">
-      <span class="section-label">// Process</span>
-      <h2 class="section-title">How It Works</h2>
-    </div>
-    <div class="how-steps">
-      <div class="step-card">
-        <span class="step-num">01</span>
-        <div class="step-title">Browse Kits</div>
-        <p class="step-desc">Check out available project kits. Watch demo videos to see what you'll build.</p>
-      </div>
-      <div class="step-card">
-        <span class="step-num">02</span>
-        <div class="step-title">Fill the Form</div>
-        <p class="step-desc">Submit a borrow request below with the kit name and your contact info.</p>
-      </div>
-      <div class="step-card">
-        <span class="step-num">03</span>
-        <div class="step-title">Pick Up Kit</div>
-        <p class="step-desc">Come to our home to pick up the kit. Sign a simple pledge form confirming pickup and return dates.</p>
-      </div>
-      <div class="step-card">
-        <span class="step-num">04</span>
-        <div class="step-title">Build & Return</div>
-        <p class="step-desc">Build your project, have fun, and return the kit with all components. Happy making! 🎉</p>
-      </div>
-    </div>
-  </section>
+ <section style="padding: 70px 2rem;">
+ <div class="section-header">
+ <span class="section-label">// Process</span>
+ <h2 class="section-title">How It Works</h2>
+ </div>
+ <div class="how-steps">
+ <div class="step-card">
+ <span class="step-num">01</span>
+ <div class="step-title">Browse Kits</div>
+ <p class="step-desc">Check out available project kits. Watch demo videos to see what you'll build.</p>
+ </div>
+ <div class="step-card">
+ <span class="step-num">02</span>
+ <div class="step-title">Fill the Form</div>
+ <p class="step-desc">Submit a borrow request below with the kit name and your contact info.</p>
+ </div>
+ <div class="step-card">
+ <span class="step-num">03</span>
+ <div class="step-title">Pick Up Kit</div>
+ <p class="step-desc">Come to our home to pick up the kit. Sign a simple pledge form confirming pickup and return dates.</p>
+ </div>
+ <div class="step-card">
+ <span class="step-num">04</span>
+ <div class="step-title">Build & Return</div>
+ <p class="step-desc">Build your project, have fun, and return the kit with all components. Happy making! </p>
+ </div>
+ </div>
+ </section>
 </div>
 
 <!-- TRUST BOX -->
 <div style="padding: 0 2rem 0;">
-  <div style="max-width:1100px;margin:0 auto;padding:40px 0;">
-    <div style="background:var(--accent-dim);border:1px solid var(--accent);border-radius:8px;padding:28px 32px;display:flex;gap:20px;align-items:flex-start;">
-      <span style="font-size:32px;flex-shrink:0;">💚</span>
-      <div>
-        <div style="font-family:var(--mono);font-size:15px;color:var(--accent);margin-bottom:8px;letter-spacing:0.04em;">We Trust You!</div>
-        <p style="font-size:14px;color:var(--text2);line-height:1.8;max-width:800px;">
-          Borrowing from Innovation Library is <strong style="color:var(--accent)">completely free</strong>.
-          Please take good care of all the components in the kit — handle them with care,
-          keep all parts together, and return everything in good condition.
-          We believe in the maker community and trust you to do the right thing! 🙌
-          <br><br>
-          <span style="font-family:var(--mono);font-size:12px;color:var(--text3);">
-            📋 When you pick up a kit you will sign a simple <strong style="color:var(--text)">Borrower's Pledge</strong> confirming the kit name, pickup date, return date, and that you agree to return all components in good condition. No fees, no deposit — just trust!
-          </span>
-        </p>
-      </div>
-    </div>
-  </div>
+ <div style="max-width:1100px;margin:0 auto;padding:40px 0;">
+ <div style="background:var(--accent-dim);border:1px solid var(--accent);border-radius: 16px;padding:28px 32px;display:flex;gap:20px;align-items:flex-start;">
+ <span style="font-size:32px;flex-shrink:0;"></span>
+ <div>
+ <div style="font-family:var(--mono);font-size:15px;color:var(--accent);margin-bottom:8px;letter-spacing:0.04em;">We Trust You!</div>
+ <p style="font-size:14px;color:var(--text2);line-height:1.8;max-width:800px;">
+ Borrowing from Innovation Library is <strong style="color:var(--accent)">completely free</strong>.
+ Please take good care of all the components in the kit — handle them with care,
+ keep all parts together, and return everything in good condition.
+ We believe in the maker community and trust you to do the right thing! 
+ <br><br>
+ <span style="font-family:var(--mono);font-size:12px;color:var(--text3);">
+ When you pick up a kit you will sign a simple <strong style="color:var(--text)">Borrower's Pledge</strong> confirming the kit name, pickup date, return date, and that you agree to return all components in good condition. No fees, no deposit — just trust!
+ </span>
+ </p>
+ </div>
+ </div>
+ </div>
 </div>
 
 <!-- STATS SECTION -->
 <div style="background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 2rem;">
-  <div style="max-width:1100px;margin:0 auto;">
-    <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:48px;">
-      <span style="font-family:var(--mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.15em;border-left:2px solid var(--accent);padding-left:10px;">// Stats</span>
-      <h2 style="font-family:var(--mono);font-size:1.6rem;color:var(--text);">Innovation Library in Numbers</h2>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:2px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+ <div style="max-width:1100px;margin:0 auto;">
+ <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:48px;">
+ <span style="font-family:var(--mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.15em;border-left:2px solid var(--accent);padding-left:10px;">// Stats</span>
+ <h2 style="font-family:var(--mono);font-size:1.6rem;color:var(--text);">Innovation Library in Numbers</h2>
+ </div>
+ <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:2px;background:var(--border);border:1px solid var(--border);border-radius: 14px;overflow:hidden;">
 
-      <!-- STAT 1: Total Kits -->
-      <div style="background:var(--card);padding:32px 28px;display:flex;flex-direction:column;gap:8px;">
-        <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;">Total Kits</span>
-        <span style="font-family:var(--mono);font-size:3rem;color:var(--accent);line-height:1;">9</span>
-        <span style="font-size:12px;color:var(--text2);">Project kits available to borrow</span>
-      </div>
+ <!-- STAT 1: Total Kits -->
+ <div style="background:var(--card);padding:32px 28px;display:flex;flex-direction:column;gap:8px;">
+ <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;">Total Kits</span>
+ <span style="font-family:var(--mono);font-size:3rem;color:var(--accent);line-height:1;">9</span>
+ <span style="font-size:12px;color:var(--text2);">Project kits available to borrow</span>
+ </div>
 
-      <!-- STAT 2: Times Borrowed — AUTO from Google Sheet -->
-      <div style="background:var(--card);padding:32px 28px;display:flex;flex-direction:column;gap:8px;">
-        <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;">Times Borrowed</span>
-        <span id="times-borrowed" style="font-family:var(--mono);font-size:3rem;color:var(--accent);line-height:1;">...</span>
-        <span style="font-size:12px;color:var(--text2);">Kits borrowed so far</span>
-      </div>
+ <!-- STAT 2: Times Borrowed — AUTO from Google Sheet -->
+ <div style="background:var(--card);padding:32px 28px;display:flex;flex-direction:column;gap:8px;">
+ <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;">Times Borrowed</span>
+ <span id="times-borrowed" style="font-family:var(--mono);font-size:3rem;color:var(--accent);line-height:1;">...</span>
+ <span style="font-size:12px;color:var(--text2);">Kits borrowed so far</span>
+ </div>
 
-      <!-- STAT 3: Kids Reached — AUTO from Google Sheet -->
-      <div style="background:var(--card);padding:32px 28px;display:flex;flex-direction:column;gap:8px;">
-        <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;">Kids Reached</span>
-        <span id="kids-reached" style="font-family:var(--mono);font-size:3rem;color:var(--accent);line-height:1;">...</span>
-        <span style="font-size:12px;color:var(--text2);">Kids who built something cool</span>
-      </div>
+ <!-- STAT 3: Kids Reached — AUTO from Google Sheet -->
+ <div style="background:var(--card);padding:32px 28px;display:flex;flex-direction:column;gap:8px;">
+ <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;">Kids Reached</span>
+ <span id="kids-reached" style="font-family:var(--mono);font-size:3rem;color:var(--accent);line-height:1;">...</span>
+ <span style="font-size:12px;color:var(--text2);">Kids who built something cool</span>
+ </div>
 
-      <!-- STAT 4: Live Visitor Count from GoatCounter -->
-      <div style="background:var(--card);padding:32px 28px;display:flex;flex-direction:column;gap:8px;">
-        <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;">Website Visitors</span>
-        <span id="visitor-count" style="font-family:var(--mono);font-size:3rem;color:var(--accent);line-height:1;">...</span>
-        <span style="font-size:12px;color:var(--text2);">People who visited our site</span>
-      </div>
+ <!-- STAT 4: Live Visitor Count from GoatCounter -->
+ <div style="background:var(--card);padding:32px 28px;display:flex;flex-direction:column;gap:8px;">
+ <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;">Website Visitors</span>
+ <span id="visitor-count" style="font-family:var(--mono);font-size:3rem;color:var(--accent);line-height:1;">...</span>
+ <span style="font-size:12px;color:var(--text2);">People who visited our site</span>
+ </div>
 
-    </div>
-    <p style="font-family:var(--mono);font-size:10px;color:var(--text3);text-align:center;margin-top:16px;letter-spacing:0.08em;">
-      // Visitor count via GoatCounter · Borrow stats live from Google Sheets
-    </p>
-  </div>
+ </div>
+ <p style="font-family:var(--mono);font-size:10px;color:var(--text3);text-align:center;margin-top:16px;letter-spacing:0.08em;">
+ // Visitor count via GoatCounter · Borrow stats live from Google Sheets
+ </p>
+ </div>
 </div>
 
 <script>
@@ -988,424 +990,424 @@ const SHEET_ID = '1GjlS3NGUoOhRciBRx2S0u4F_hsoZkCmXRv6J0twuqhU';
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
 fetch(SHEET_URL)
-  .then(r => r.text())
-  .then(text => {
-    // Google wraps response in /*O_o*/ google.visualization.Query.setResponse({...});
-    const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
-    const rows = json.table.rows;
+ .then(r => r.text())
+ .then(text => {
+ // Google wraps response in /*O_o*/ google.visualization.Query.setResponse({...});
+ const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
+ const rows = json.table.rows;
 
-    // Times Borrowed = total rows (each row = one borrow request)
-    const timesBorrowed = rows.length;
+ // Times Borrowed = total rows (each row = one borrow request)
+ const timesBorrowed = rows.length;
 
-    // Kids Reached = count of unique kid names (column index 1 = Kid's Name)
-    const uniqueKids = new Set(rows.map(r => r.c[1]?.v?.trim().toLowerCase()).filter(Boolean));
-    const kidsReached = uniqueKids.size;
+ // Kids Reached = count of unique kid names (column index 1 = Kid's Name)
+ const uniqueKids = new Set(rows.map(r => r.c[1]?.v?.trim().toLowerCase()).filter(Boolean));
+ const kidsReached = uniqueKids.size;
 
-    // Update the stats on the page
-    const borrowEl = document.getElementById('times-borrowed');
-    const kidsEl = document.getElementById('kids-reached');
-    if (borrowEl) borrowEl.textContent = timesBorrowed;
-    if (kidsEl) kidsEl.textContent = kidsReached;
-  })
-  .catch(() => {
-    // If sheet not yet public or error, show 0
-    const borrowEl = document.getElementById('times-borrowed');
-    const kidsEl = document.getElementById('kids-reached');
-    if (borrowEl) borrowEl.textContent = '0';
-    if (kidsEl) kidsEl.textContent = '0';
-  });
+ // Update the stats on the page
+ const borrowEl = document.getElementById('times-borrowed');
+ const kidsEl = document.getElementById('kids-reached');
+ if (borrowEl) borrowEl.textContent = timesBorrowed;
+ if (kidsEl) kidsEl.textContent = kidsReached;
+ })
+ .catch(() => {
+ // If sheet not yet public or error, show 0
+ const borrowEl = document.getElementById('times-borrowed');
+ const kidsEl = document.getElementById('kids-reached');
+ if (borrowEl) borrowEl.textContent = '0';
+ if (kidsEl) kidsEl.textContent = '0';
+ });
 
 // ── GoatCounter: fetch visitor count via public counter endpoint ──
 fetch('https://innovationlibrary.goatcounter.com/counter//.json')
-  .then(r => {
-    if (!r.ok) throw new Error('Counter not public');
-    return r.json();
-  })
-  .then(data => {
-    // data.count is a formatted string like "1,234"
-    const count = data.count_unique || data.count || '0';
-    document.getElementById('visitor-count').textContent = count;
-    const heroEl = document.getElementById('hero-visitor-count');
-    if (heroEl) heroEl.textContent = count;
-  })
-  .catch(() => {
-    // Fallback: hide the visitor stat gracefully
-    document.getElementById('visitor-count').textContent = '—';
-    const heroEl = document.getElementById('hero-visitor-count');
-    if (heroEl) heroEl.textContent = '—';
-  });
+ .then(r => {
+ if (!r.ok) throw new Error('Counter not public');
+ return r.json();
+ })
+ .then(data => {
+ // data.count is a formatted string like "1,234"
+ const count = data.count_unique || data.count || '0';
+ document.getElementById('visitor-count').textContent = count;
+ const heroEl = document.getElementById('hero-visitor-count');
+ if (heroEl) heroEl.textContent = count;
+ })
+ .catch(() => {
+ // Fallback: hide the visitor stat gracefully
+ document.getElementById('visitor-count').textContent = '—';
+ const heroEl = document.getElementById('hero-visitor-count');
+ if (heroEl) heroEl.textContent = '—';
+ });
 </script>
 
 <!-- BORROW FORM -->
 <section id="borrow">
-  <div class="section-header">
-    <span class="section-label">// Request</span>
-    <h2 class="section-title">Borrow a Kit</h2>
-  </div>
+ <div class="section-header">
+ <span class="section-label">// Request</span>
+ <h2 class="section-title">Borrow a Kit</h2>
+ </div>
 
-  <div class="form-container">
-    <div class="form-header">
-      <div class="terminal-dot" style="background:#e05050"></div>
-      <div class="terminal-dot" style="background:#f0a500"></div>
-      <div class="terminal-dot" style="background:#00e5a0"></div>
-      <span class="form-title">borrow_request.form — submit to queue</span>
-    </div>
+ <div class="form-container">
+ <div class="form-header">
+ <div class="terminal-dot" style="background:#e05050"></div>
+ <div class="terminal-dot" style="background:#f0a500"></div>
+ <div class="terminal-dot" style="background:#4d9fff"></div>
+ <span class="form-title">borrow_request.form — submit to queue</span>
+ </div>
 
-    <!--
-      INSTRUCTIONS FOR AMARTYA:
-      1. Go to forms.google.com and create a new form
-      2. Add fields: Your Name, Parent Name, Email, Phone, Kit Name (dropdown), Borrow Date
-      3. Click Send → Embed → copy the iframe src URL
-      4. Replace YOUR_GOOGLE_FORM_ID below with your form's embed URL
-    -->
-    <div class="google-form-wrapper">
-      <!-- REPLACE the src below with your Google Form embed URL -->
-      <!-- Example: src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true" -->
-      <iframe
-        src="https://docs.google.com/forms/d/e/1FAIpQLSfpCXNISVKKQwI-0Zmp_iu6NOoirSzZvcXL1dUezPYjmgABZA/viewform?embedded=true"
-        frameborder="0" marginheight="0" marginwidth="0">
-        Loading form...
-      </iframe>
-    </div>
-  </div>
+ <!--
+ INSTRUCTIONS FOR AMARTYA:
+ 1. Go to forms.google.com and create a new form
+ 2. Add fields: Your Name, Parent Name, Email, Phone, Kit Name (dropdown), Borrow Date
+ 3. Click Send → Embed → copy the iframe src URL
+ 4. Replace YOUR_GOOGLE_FORM_ID below with your form's embed URL
+ -->
+ <div class="google-form-wrapper">
+ <!-- REPLACE the src below with your Google Form embed URL -->
+ <!-- Example: src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true" -->
+ <iframe
+ src="https://docs.google.com/forms/d/e/1FAIpQLSfpCXNISVKKQwI-0Zmp_iu6NOoirSzZvcXL1dUezPYjmgABZA/viewform?embedded=true"
+ frameborder="0" marginheight="0" marginwidth="0">
+ Loading form...
+ </iframe>
+ </div>
+ </div>
 </section>
 
 <!-- CONTACT SECTION -->
 <section id="contact">
-  <div class="section-header">
-    <span class="section-label">// Contact</span>
-    <h2 class="section-title">About & Contact</h2>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+ <div class="section-header">
+ <span class="section-label">// Contact</span>
+ <h2 class="section-title">About & Contact</h2>
+ </div>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
 
-    <!-- About Amartya -->
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:32px;">
-      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
-        <div style="width:80px;height:80px;border-radius:50%;overflow:hidden;border:2px solid var(--accent);flex-shrink:0;">
-          <img src="Amartya.jpeg" alt="Amartya" style="width:100%;height:100%;object-fit:cover;">
-        </div>
-        <div>
-          <div style="font-family:var(--mono);font-size:16px;color:var(--text);letter-spacing:0.04em;">Amartya Haldar</div>
-          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;">Founder · Innovation Library</div>
-        </div>
-      </div>
-      <p style="font-size:14px;color:var(--text2);line-height:1.8;">
-        Hi! I'm Amartya, a middle schooler who loves building hardware projects. 
-        I have a bunch of cool maker kits — Arduino, Lego Spike, Sphero, micro:bit and more — 
-        and I thought, why not share them with other kids in the community?
-        <br><br>
-        That's how Innovation Library was born! My goal is to make hands-on tech 
-        accessible to every kid, for free. Borrow a kit, build something awesome, 
-        and inspire the next maker! 🚀
-      </p>
-    </div>
+ <!-- About Amartya -->
+ <div style="background:var(--card);border:1px solid var(--border);border-radius: 16px;padding:32px;">
+ <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+ <div style="width:80px;height:80px;border-radius:50%;overflow:hidden;border:2px solid var(--accent);flex-shrink:0;">
+ <img src="Amartya.jpeg" alt="Amartya" style="width:100%;height:100%;object-fit:cover;">
+ </div>
+ <div>
+ <div style="font-family:var(--mono);font-size:16px;color:var(--text);letter-spacing:0.04em;">Amartya Haldar</div>
+ <div style="font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;">Founder · Innovation Library</div>
+ </div>
+ </div>
+ <p style="font-size:14px;color:var(--text2);line-height:1.8;">
+ Hi! I'm Amartya, a middle schooler who loves building hardware projects. 
+ I have a bunch of cool maker kits — Arduino, Lego Spike, Sphero, micro:bit and more — 
+ and I thought, why not share them with other kids in the community?
+ <br><br>
+ That's how Innovation Library was born! My goal is to make hands-on tech 
+ accessible to every kid, for free. Borrow a kit, build something awesome, 
+ and inspire the next maker! 
+ </p>
+ </div>
 
-    <!-- Contact Info -->
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:32px;display:flex;flex-direction:column;gap:20px;">
-      <div style="font-family:var(--mono);font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;">// Get in Touch</div>
+ <!-- Contact Info -->
+ <div style="background:var(--card);border:1px solid var(--border);border-radius: 16px;padding:32px;display:flex;flex-direction:column;gap:20px;">
+ <div style="font-family:var(--mono);font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;">// Get in Touch</div>
 
-      <div style="display:flex;flex-direction:column;gap:16px;">
+ <div style="display:flex;flex-direction:column;gap:16px;">
 
-        <div style="display:flex;align-items:center;gap:14px;padding:16px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;">
-          <span style="font-size:20px;">📧</span>
-          <div>
-            <div style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Email</div>
-            <a href="mailto:amartya13.haldar@gmail.com" style="font-family:var(--mono);font-size:13px;color:var(--accent);text-decoration:none;letter-spacing:0.04em;">amartya13.haldar@gmail.com</a>
-          </div>
-        </div>
+ <div style="display:flex;align-items:center;gap:14px;padding:16px;background:var(--bg3);border:1px solid var(--border);border-radius: 14px;">
+ <span style="font-size:20px;"></span>
+ <div>
+ <div style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Email</div>
+ <a href="mailto:amartya13.haldar@gmail.com" style="font-family:var(--mono);font-size:13px;color:var(--accent);text-decoration:none;letter-spacing:0.04em;">amartya13.haldar@gmail.com</a>
+ </div>
+ </div>
 
-        <div style="display:flex;align-items:center;gap:14px;padding:16px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;">
-          <span style="font-size:20px;">🌐</span>
-          <div>
-            <div style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Website</div>
-            <a href="https://amartya2013.github.io" style="font-family:var(--mono);font-size:13px;color:var(--accent);text-decoration:none;letter-spacing:0.04em;">amartya2013.github.io</a>
-          </div>
-        </div>
+ <div style="display:flex;align-items:center;gap:14px;padding:16px;background:var(--bg3);border:1px solid var(--border);border-radius: 14px;">
+ <span style="font-size:20px;"></span>
+ <div>
+ <div style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Website</div>
+ <a href="https://amartya2013.github.io" style="font-family:var(--mono);font-size:13px;color:var(--accent);text-decoration:none;letter-spacing:0.04em;">amartya2013.github.io</a>
+ </div>
+ </div>
 
-        <div style="display:flex;align-items:center;gap:14px;padding:16px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;">
-          <span style="font-size:20px;">📍</span>
-          <div>
-            <div style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Pickup & Return</div>
-            <span style="font-family:var(--mono);font-size:13px;color:var(--text2);letter-spacing:0.04em;">In person — contact us to arrange</span>
-          </div>
-        </div>
+ <div style="display:flex;align-items:center;gap:14px;padding:16px;background:var(--bg3);border:1px solid var(--border);border-radius: 14px;">
+ <span style="font-size:20px;"></span>
+ <div>
+ <div style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Pickup & Return</div>
+ <span style="font-family:var(--mono);font-size:13px;color:var(--text2);letter-spacing:0.04em;">In person — contact us to arrange</span>
+ </div>
+ </div>
 
-      </div>
+ </div>
 
-      <a href="mailto:amartya13.haldar@gmail.com" class="btn-primary" style="text-align:center;margin-top:4px;">
-        📧 Send an Email
-      </a>
-    </div>
+ <a href="mailto:amartya13.haldar@gmail.com" class="btn-primary" style="text-align:center;margin-top:4px;">
+ Send an Email
+ </a>
+ </div>
 
-  </div>
+ </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">
-    Made with ⚡ by <span>Amartya</span> — Innovation Library
-  </div>
-  <div class="footer-sub" style="margin-top:8px">
-    All kits picked up & returned in person · Completely free to borrow · We trust you!
-  </div>
-  <div style="margin-top:16px;max-width:600px;margin-left:auto;margin-right:auto;">
-    <p style="font-family:var(--mono);font-size:11px;color:var(--text3);line-height:1.6;letter-spacing:0.04em;">
-      ⚠ This project is not affiliated with or endorsed by LEGO® or Snap Circuits®.
-    </p>
-  </div>
+ <div class="footer-logo">
+ Made with by <span>Amartya</span> — Innovation Library
+ </div>
+ <div class="footer-sub" style="margin-top:8px">
+ All kits picked up & returned in person · Completely free to borrow · We trust you!
+ </div>
+ <div style="margin-top:16px;max-width:600px;margin-left:auto;margin-right:auto;">
+ <p style="font-family:var(--mono);font-size:11px;color:var(--text3);line-height:1.6;letter-spacing:0.04em;">
+ This project is not affiliated with or endorsed by LEGO® or Snap Circuits®.
+ </p>
+ </div>
 </footer>
 
 </div><!-- .content -->
 
 <!-- VIDEO MODAL -->
 <div class="modal-overlay" id="video-modal" onclick="closeModal(event)">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title" id="modal-kit-name">Kit Demo</span>
-      <button class="modal-close" onclick="closeVideoModal()">✕</button>
-    </div>
-    <div class="modal-body">
-      <iframe id="modal-video" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
-    </div>
-  </div>
+ <div class="modal">
+ <div class="modal-header">
+ <span class="modal-title" id="modal-kit-name">Kit Demo</span>
+ <button class="modal-close" onclick="closeVideoModal()"></button>
+ </div>
+ <div class="modal-body">
+ <iframe id="modal-video" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+ </div>
+ </div>
 </div>
 
 <script>
 const kits = [
-  {
-    id: 1,
-    name: "Lego Spike Prime",
-    difficulty: "intermediate",
-    minAge: 8, maxAge: 14,
-    deposit: 20,
-    available: true,
-    page: "lego-spike-prime.html",
-    image: "SpikePrime/SP1.jpg",
-    videoUrl: "https://www.youtube.com/embed/JO0CP6pV_Zk",
-    desc: "Build and program robots that navigate mazes, follow lines, and respond to obstacles. Code with blocks or Python.",
-    components: ["SPIKE Prime Hub", "Motors x3", "Sensors", "Lego Technic Pieces"]
-  },
-  {
-    id: 2,
-    name: "SnapCircuit",
-    difficulty: "beginner",
-    minAge: 5, maxAge: 10,
-    deposit: 10,
-    available: true,
-    page: "snapcircuit.html",
-    image: "SnapCircuit/SC1.jpg",
-    videoUrl: "https://www.youtube.com/embed/vwSUYrpUI_4",
-    desc: "Snap together real electronic components to build working circuits — lights, sounds, alarms and more. No soldering needed!",
-    components: ["Snap Circuit Board", "LED Modules", "Speaker", "Switch Pack", "Power Module"]
-  },
-  {
-    id: 3,
-    name: "micro:bit",
-    difficulty: "intermediate",
-    minAge: 6, maxAge: 10,
-    deposit: 10,
-    available: true,
-    page: "microbit.html",
-    image: "Microbit/M1.jpg",
-    videoUrl: "https://www.youtube.com/embed/xjEU6_rQ2Q0",
-    desc: "A tiny programmable computer with LED display, buttons, and sensors. Make games, gadgets, step counters and more!",
-    components: ["micro:bit v2", "USB Cable", "Battery Pack", "Sensors"]
-  },
-  {
-    id: 4,
-    name: "Lego Spike Essential",
-    difficulty: "beginner",
-    minAge: 7, maxAge: 12,
-    deposit: 15,
-    available: true,
-    page: "lego-spike-essential.html",
-    image: "LegoEssential/SE1.jpg",
-    videoUrl: "https://www.youtube.com/embed/KVANROizzA4",
-    desc: "Colorful LEGO bricks with easy drag-and-drop coding. Build fun models and bring them to life with code!",
-    components: ["SPIKE Essential Hub", "Motors x2", "Color Sensor", "LEGO Bricks Set"]
-  },
-  {
-    id: 5,
-    name: "Sphero Bolt",
-    difficulty: "advanced",
-    minAge: 8, maxAge: 14,
-    deposit: 15,
-    available: true,
-    page: "sphero-bolt.html",
-    image: "Spheros/S1.jpg",
-    videoUrl: "https://www.youtube.com/embed/NdHY5R5y-Ms",
-    desc: "A programmable robot ball with LED matrix and sensors. Drive it, program light patterns, create obstacle courses!",
-    components: ["Sphero BOLT", "Charging Base", "USB Cable", "Obstacle Cones x4"]
-  },
-  {
-    id: 7,
-    name: "Boltey",
-    difficulty: "beginner",
-    minAge: 6, maxAge: 10,
-    deposit: 10,
-    available: true,
-    page: "boltey.html",
-    image: "Botley/B1.jpg",
-    videoUrl: "https://www.youtube.com/embed/GQ52YRq9F18",
-    desc: "A friendly little coding robot for the youngest makers! Button-based coding — no screen needed. Perfect first robot!",
-    components: ["Boltey Robot", "Charging Cable", "Activity Cards", "Quick Start Guide"]
-  },
-  {
-    id: 8,
-    name: "Arduino",
-    difficulty: "advanced",
-    minAge: 8, maxAge: 14,
-    deposit: 10,
-    available: true,
-    page: "arduino.html",
-    image: "Arduino/AR1.jpg",
-    videoUrl: "https://www.youtube.com/embed/3f-GLH1uaKQ",
-    desc: "An open-source electronics platform! Program a microcontroller to control lights, motors, sensors and build robots, games and more.",
-    components: ["Arduino Uno Board", "Breadboard", "Jumper Wires", "Sensors", "Motors"]
-  }
+ {
+ id: 1,
+ name: "Lego Spike Prime",
+ difficulty: "intermediate",
+ minAge: 8, maxAge: 14,
+ deposit: 20,
+ available: true,
+ page: "lego-spike-prime.html",
+ image: "SpikePrime/SP1.jpg",
+ videoUrl: "https://www.youtube.com/embed/JO0CP6pV_Zk",
+ desc: "Build and program robots that navigate mazes, follow lines, and respond to obstacles. Code with blocks or Python.",
+ components: ["SPIKE Prime Hub", "Motors x3", "Sensors", "Lego Technic Pieces"]
+ },
+ {
+ id: 2,
+ name: "SnapCircuit",
+ difficulty: "beginner",
+ minAge: 5, maxAge: 10,
+ deposit: 10,
+ available: true,
+ page: "snapcircuit.html",
+ image: "SnapCircuit/SC1.jpg",
+ videoUrl: "https://www.youtube.com/embed/vwSUYrpUI_4",
+ desc: "Snap together real electronic components to build working circuits — lights, sounds, alarms and more. No soldering needed!",
+ components: ["Snap Circuit Board", "LED Modules", "Speaker", "Switch Pack", "Power Module"]
+ },
+ {
+ id: 3,
+ name: "micro:bit",
+ difficulty: "intermediate",
+ minAge: 6, maxAge: 10,
+ deposit: 10,
+ available: true,
+ page: "microbit.html",
+ image: "Microbit/M1.jpg",
+ videoUrl: "https://www.youtube.com/embed/xjEU6_rQ2Q0",
+ desc: "A tiny programmable computer with LED display, buttons, and sensors. Make games, gadgets, step counters and more!",
+ components: ["micro:bit v2", "USB Cable", "Battery Pack", "Sensors"]
+ },
+ {
+ id: 4,
+ name: "Lego Spike Essential",
+ difficulty: "beginner",
+ minAge: 7, maxAge: 12,
+ deposit: 15,
+ available: true,
+ page: "lego-spike-essential.html",
+ image: "LegoEssential/SE1.jpg",
+ videoUrl: "https://www.youtube.com/embed/KVANROizzA4",
+ desc: "Colorful LEGO bricks with easy drag-and-drop coding. Build fun models and bring them to life with code!",
+ components: ["SPIKE Essential Hub", "Motors x2", "Color Sensor", "LEGO Bricks Set"]
+ },
+ {
+ id: 5,
+ name: "Sphero Bolt",
+ difficulty: "advanced",
+ minAge: 8, maxAge: 14,
+ deposit: 15,
+ available: true,
+ page: "sphero-bolt.html",
+ image: "Spheros/S1.jpg",
+ videoUrl: "https://www.youtube.com/embed/NdHY5R5y-Ms",
+ desc: "A programmable robot ball with LED matrix and sensors. Drive it, program light patterns, create obstacle courses!",
+ components: ["Sphero BOLT", "Charging Base", "USB Cable", "Obstacle Cones x4"]
+ },
+ {
+ id: 7,
+ name: "Boltey",
+ difficulty: "beginner",
+ minAge: 6, maxAge: 10,
+ deposit: 10,
+ available: true,
+ page: "boltey.html",
+ image: "Botley/B1.jpg",
+ videoUrl: "https://www.youtube.com/embed/GQ52YRq9F18",
+ desc: "A friendly little coding robot for the youngest makers! Button-based coding — no screen needed. Perfect first robot!",
+ components: ["Boltey Robot", "Charging Cable", "Activity Cards", "Quick Start Guide"]
+ },
+ {
+ id: 8,
+ name: "Arduino",
+ difficulty: "advanced",
+ minAge: 8, maxAge: 14,
+ deposit: 10,
+ available: true,
+ page: "arduino.html",
+ image: "Arduino/AR1.jpg",
+ videoUrl: "https://www.youtube.com/embed/3f-GLH1uaKQ",
+ desc: "An open-source electronics platform! Program a microcontroller to control lights, motors, sensors and build robots, games and more.",
+ components: ["Arduino Uno Board", "Breadboard", "Jumper Wires", "Sensors", "Motors"]
+ }
 ];
 
 function getYouTubeId(url) {
-  const match = url.match(/embed\/([^?]+)/);
-  return match ? match[1] : null;
+ const match = url.match(/embed\/([^?]+)/);
+ return match ? match[1] : null;
 }
 
 function getThumbnail(videoUrl) {
-  const id = getYouTubeId(videoUrl);
-  return id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : null;
+ const id = getYouTubeId(videoUrl);
+ return id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : null;
 }
 
 // ── Multi-filter state ──
 let activeFilters = { difficulty: 'all', age: 'all', avail: 'all', search: '' };
 
 function renderKits(list) {
-  const grid = document.getElementById('kit-grid');
+ const grid = document.getElementById('kit-grid');
 
-  const availableCount = kits.filter(k => k.available).length;
-  document.getElementById('available-count').textContent = availableCount;
+ const availableCount = kits.filter(k => k.available).length;
+ document.getElementById('available-count').textContent = availableCount;
 
-  if (list.length === 0) {
-    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;font-family:var(--mono);color:var(--text3);font-size:14px;">
-      No kits match your filters. <a href="#" onclick="resetFilters();return false;" style="color:var(--accent);">Clear filters</a>
-    </div>`;
-    return;
-  }
+ if (list.length === 0) {
+ grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;font-family:var(--mono);color:var(--text3);font-size:14px;">
+ No kits match your filters. <a href="#" onclick="resetFilters();return false;" style="color:var(--accent);">Clear filters</a>
+ </div>`;
+ return;
+ }
 
-  grid.innerHTML = list.map(kit => {
-    const thumb = kit.image;
-    const statusClass = kit.available ? 'status-available' : 'status-borrowed';
-    const statusText = kit.available ? 'Available' : 'Borrowed';
-    const diffClass = `diff-${kit.difficulty}`;
-    const diffText = kit.difficulty.charAt(0).toUpperCase() + kit.difficulty.slice(1);
-    const cardClass = kit.available ? 'kit-card available' : 'kit-card';
-    const ageText = `Ages ${kit.minAge}-${kit.maxAge}`;
+ grid.innerHTML = list.map(kit => {
+ const thumb = kit.image;
+ const statusClass = kit.available ? 'status-available' : 'status-borrowed';
+ const statusText = kit.available ? 'Available' : 'Borrowed';
+ const diffClass = `diff-${kit.difficulty}`;
+ const diffText = kit.difficulty.charAt(0).toUpperCase() + kit.difficulty.slice(1);
+ const cardClass = kit.available ? 'kit-card available' : 'kit-card';
+ const ageText = `Ages ${kit.minAge}-${kit.maxAge}`;
 
-    return `
-    <div class="${cardClass}" data-id="${kit.id}" style="cursor:pointer;" onclick="window.location='${kit.page}'">
-      <div class="kit-thumb" onclick="event.stopPropagation();window.location='${kit.page}'">
-        <img src="${thumb}" alt="${kit.name}" onerror="this.src='${kit.image}'">
-        <div class="play-overlay">
-          <div class="play-btn">
-            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-          </div>
-        </div>
-        <span class="kit-status-badge ${statusClass}">${statusText}</span>
-      </div>
-      <div class="kit-body">
-        <div class="kit-name">${kit.name}</div>
-        <div class="kit-meta">
-          <span class="difficulty-badge ${diffClass}">${diffText}</span>
-          <span style="font-family:var(--mono);font-size:10px;color:var(--text3);">${ageText}</span>
-          <span class="kit-deposit">🆓 Free</span>
-        </div>
-        <p class="kit-desc">${kit.desc}</p>
-        <div class="kit-components">
-          ${kit.components.map(c => `<span class="component-tag">${c}</span>`).join('')}
-        </div>
-        <div class="kit-actions">
-          ${kit.available
-            ? `<a href="${kit.page}" class="btn-borrow">View & Borrow</a>`
-            : `<span class="btn-borrow disabled">Currently Borrowed</span>`
-          }
-          <button class="btn-video" onclick="event.stopPropagation();openVideo(${kit.id})">▶ Demo</button>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
+ return `
+ <div class="${cardClass}" data-id="${kit.id}" style="cursor:pointer;" onclick="window.location='${kit.page}'">
+ <div class="kit-thumb" onclick="event.stopPropagation();window.location='${kit.page}'">
+ <img src="${thumb}" alt="${kit.name}" onerror="this.src='${kit.image}'">
+ <div class="play-overlay">
+ <div class="play-btn">
+ <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+ </div>
+ </div>
+ <span class="kit-status-badge ${statusClass}">${statusText}</span>
+ </div>
+ <div class="kit-body">
+ <div class="kit-name">${kit.name}</div>
+ <div class="kit-meta">
+ <span class="difficulty-badge ${diffClass}">${diffText}</span>
+ <span style="font-family:var(--mono);font-size:10px;color:var(--text3);">${ageText}</span>
+ <span class="kit-deposit">Free</span>
+ </div>
+ <p class="kit-desc">${kit.desc}</p>
+ <div class="kit-components">
+ ${kit.components.map(c => `<span class="component-tag">${c}</span>`).join('')}
+ </div>
+ <div class="kit-actions">
+ ${kit.available
+ ? `<a href="${kit.page}" class="btn-borrow">View & Borrow</a>`
+ : `<span class="btn-borrow disabled">Currently Borrowed</span>`
+ }
+ <button class="btn-video" onclick="event.stopPropagation();openVideo(${kit.id})">▶ Demo</button>
+ </div>
+ </div>
+ </div>`;
+ }).join('');
 }
 
 function applyFilters() {
-  activeFilters.search = (document.getElementById('kit-search')?.value || '').toLowerCase().trim();
+ activeFilters.search = (document.getElementById('kit-search')?.value || '').toLowerCase().trim();
 
-  const filtered = kits.filter(k => {
-    // Difficulty
-    if (activeFilters.difficulty !== 'all' && k.difficulty !== activeFilters.difficulty) return false;
-    // Availability
-    if (activeFilters.avail === 'available' && !k.available) return false;
-    // Age — kit matches if the selected age bracket overlaps the kit's range
-    if (activeFilters.age !== 'all') {
-      const a = parseInt(activeFilters.age);
-      const brackets = { 5: [5,7], 8: [8,10], 11: [11,14] };
-      const [lo, hi] = brackets[a];
-      // overlap check
-      if (k.maxAge < lo || k.minAge > hi) return false;
-    }
-    // Search
-    if (activeFilters.search && !k.name.toLowerCase().includes(activeFilters.search)) return false;
-    return true;
-  });
+ const filtered = kits.filter(k => {
+ // Difficulty
+ if (activeFilters.difficulty !== 'all' && k.difficulty !== activeFilters.difficulty) return false;
+ // Availability
+ if (activeFilters.avail === 'available' && !k.available) return false;
+ // Age — kit matches if the selected age bracket overlaps the kit's range
+ if (activeFilters.age !== 'all') {
+ const a = parseInt(activeFilters.age);
+ const brackets = { 5: [5,7], 8: [8,10], 11: [11,14] };
+ const [lo, hi] = brackets[a];
+ // overlap check
+ if (k.maxAge < lo || k.minAge > hi) return false;
+ }
+ // Search
+ if (activeFilters.search && !k.name.toLowerCase().includes(activeFilters.search)) return false;
+ return true;
+ });
 
-  renderKits(filtered);
+ renderKits(filtered);
 }
 
 function setDifficulty(val, btn) {
-  activeFilters.difficulty = val;
-  document.querySelectorAll('[data-difficulty]').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  applyFilters();
+ activeFilters.difficulty = val;
+ document.querySelectorAll('[data-difficulty]').forEach(b => b.classList.remove('active'));
+ btn.classList.add('active');
+ applyFilters();
 }
 
 function setAge(val, btn) {
-  activeFilters.age = val;
-  document.querySelectorAll('[data-age]').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  applyFilters();
+ activeFilters.age = val;
+ document.querySelectorAll('[data-age]').forEach(b => b.classList.remove('active'));
+ btn.classList.add('active');
+ applyFilters();
 }
 
 function setAvail(val, btn) {
-  activeFilters.avail = val;
-  document.querySelectorAll('[data-avail]').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  applyFilters();
+ activeFilters.avail = val;
+ document.querySelectorAll('[data-avail]').forEach(b => b.classList.remove('active'));
+ btn.classList.add('active');
+ applyFilters();
 }
 
 function resetFilters() {
-  activeFilters = { difficulty: 'all', age: 'all', avail: 'all', search: '' };
-  document.getElementById('kit-search').value = '';
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('[data-difficulty="all"],[data-age="all"],[data-avail="all"]').forEach(b => b.classList.add('active'));
-  applyFilters();
+ activeFilters = { difficulty: 'all', age: 'all', avail: 'all', search: '' };
+ document.getElementById('kit-search').value = '';
+ document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+ document.querySelectorAll('[data-difficulty="all"],[data-age="all"],[data-avail="all"]').forEach(b => b.classList.add('active'));
+ applyFilters();
 }
 
 function openVideo(kitId) {
-  const kit = kits.find(k => k.id === kitId);
-  if (!kit) return;
-  const videoId = kit.videoUrl.split('/embed/')[1].split('?')[0].split('&')[0];
-  window.open('https://www.youtube.com/watch?v=' + videoId, '_blank');
+ const kit = kits.find(k => k.id === kitId);
+ if (!kit) return;
+ const videoId = kit.videoUrl.split('/embed/')[1].split('?')[0].split('&')[0];
+ window.open('https://www.youtube.com/watch?v=' + videoId, '_blank');
 }
 
 function closeVideoModal() {
-  document.getElementById('video-modal').classList.remove('open');
-  document.getElementById('modal-video').src = '';
-  document.body.style.overflow = '';
+ document.getElementById('video-modal').classList.remove('open');
+ document.getElementById('modal-video').src = '';
+ document.body.style.overflow = '';
 }
 
 function closeModal(e) {
-  if (e.target === document.getElementById('video-modal')) closeVideoModal();
+ if (e.target === document.getElementById('video-modal')) closeVideoModal();
 }
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeVideoModal();
+ if (e.key === 'Escape') closeVideoModal();
 });
 
 applyFilters();
