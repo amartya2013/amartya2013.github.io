@@ -841,12 +841,42 @@
     <h2 class="section-title">Project Kits</h2>
   </div>
 
-  <div class="filter-bar">
-    <button class="filter-btn active" onclick="filterKits('all', this)">All Kits</button>
-    <button class="filter-btn" onclick="filterKits('beginner', this)">Beginner</button>
-    <button class="filter-btn" onclick="filterKits('intermediate', this)">Intermediate</button>
-    <button class="filter-btn" onclick="filterKits('advanced', this)">Advanced</button>
-    <button class="filter-btn" onclick="filterKits('available', this)">Available Now</button>
+  <!-- Search box -->
+  <div style="margin-bottom:20px;">
+    <input type="text" id="kit-search" placeholder="🔍  Search kits by name..."
+      oninput="applyFilters()"
+      style="width:100%;max-width:400px;font-family:var(--mono);font-size:13px;color:var(--text);background:var(--card);border:1px solid var(--border);border-radius:4px;padding:12px 16px;letter-spacing:0.04em;outline:none;">
+  </div>
+
+  <!-- Difficulty filter -->
+  <div style="margin-bottom:14px;">
+    <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;margin-right:12px;">Difficulty:</span>
+    <div class="filter-bar" style="display:inline-flex;margin-bottom:0;">
+      <button class="filter-btn active" data-difficulty="all" onclick="setDifficulty('all', this)">All</button>
+      <button class="filter-btn" data-difficulty="beginner" onclick="setDifficulty('beginner', this)">Beginner</button>
+      <button class="filter-btn" data-difficulty="intermediate" onclick="setDifficulty('intermediate', this)">Intermediate</button>
+      <button class="filter-btn" data-difficulty="advanced" onclick="setDifficulty('advanced', this)">Advanced</button>
+    </div>
+  </div>
+
+  <!-- Age filter -->
+  <div style="margin-bottom:14px;">
+    <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;margin-right:12px;">Age:</span>
+    <div class="filter-bar" style="display:inline-flex;margin-bottom:0;">
+      <button class="filter-btn active" data-age="all" onclick="setAge('all', this)">All Ages</button>
+      <button class="filter-btn" data-age="5" onclick="setAge('5', this)">5-7</button>
+      <button class="filter-btn" data-age="8" onclick="setAge('8', this)">8-10</button>
+      <button class="filter-btn" data-age="11" onclick="setAge('11', this)">11-14</button>
+    </div>
+  </div>
+
+  <!-- Availability filter -->
+  <div style="margin-bottom:36px;">
+    <span style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;margin-right:12px;">Status:</span>
+    <div class="filter-bar" style="display:inline-flex;margin-bottom:0;">
+      <button class="filter-btn active" data-avail="all" onclick="setAvail('all', this)">All</button>
+      <button class="filter-btn" data-avail="available" onclick="setAvail('available', this)">Available Now</button>
+    </div>
   </div>
 
   <div class="kit-grid" id="kit-grid">
@@ -1146,6 +1176,7 @@ const kits = [
     id: 1,
     name: "Lego Spike Prime",
     difficulty: "intermediate",
+    minAge: 8, maxAge: 14,
     deposit: 20,
     available: true,
     page: "lego-spike-prime.html",
@@ -1158,6 +1189,7 @@ const kits = [
     id: 2,
     name: "SnapCircuit",
     difficulty: "beginner",
+    minAge: 5, maxAge: 10,
     deposit: 10,
     available: true,
     page: "snapcircuit.html",
@@ -1170,6 +1202,7 @@ const kits = [
     id: 3,
     name: "micro:bit",
     difficulty: "intermediate",
+    minAge: 6, maxAge: 10,
     deposit: 10,
     available: true,
     page: "microbit.html",
@@ -1182,6 +1215,7 @@ const kits = [
     id: 4,
     name: "Lego Spike Essential",
     difficulty: "beginner",
+    minAge: 7, maxAge: 12,
     deposit: 15,
     available: true,
     page: "lego-spike-essential.html",
@@ -1194,6 +1228,7 @@ const kits = [
     id: 5,
     name: "Sphero Bolt",
     difficulty: "advanced",
+    minAge: 8, maxAge: 14,
     deposit: 15,
     available: true,
     page: "sphero-bolt.html",
@@ -1206,6 +1241,7 @@ const kits = [
     id: 7,
     name: "Boltey",
     difficulty: "beginner",
+    minAge: 6, maxAge: 10,
     deposit: 10,
     available: true,
     page: "boltey.html",
@@ -1218,6 +1254,7 @@ const kits = [
     id: 8,
     name: "Arduino",
     difficulty: "advanced",
+    minAge: 8, maxAge: 14,
     deposit: 10,
     available: true,
     page: "arduino.html",
@@ -1238,24 +1275,30 @@ function getThumbnail(videoUrl) {
   return id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : null;
 }
 
-function renderKits(filter) {
+// ── Multi-filter state ──
+let activeFilters = { difficulty: 'all', age: 'all', avail: 'all', search: '' };
+
+function renderKits(list) {
   const grid = document.getElementById('kit-grid');
-  const filtered = kits.filter(k => {
-    if (filter === 'all') return true;
-    if (filter === 'available') return k.available;
-    return k.difficulty === filter;
-  });
 
   const availableCount = kits.filter(k => k.available).length;
   document.getElementById('available-count').textContent = availableCount;
 
-  grid.innerHTML = filtered.map(kit => {
+  if (list.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;font-family:var(--mono);color:var(--text3);font-size:14px;">
+      No kits match your filters. <a href="#" onclick="resetFilters();return false;" style="color:var(--accent);">Clear filters</a>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(kit => {
     const thumb = kit.image;
     const statusClass = kit.available ? 'status-available' : 'status-borrowed';
     const statusText = kit.available ? 'Available' : 'Borrowed';
     const diffClass = `diff-${kit.difficulty}`;
     const diffText = kit.difficulty.charAt(0).toUpperCase() + kit.difficulty.slice(1);
     const cardClass = kit.available ? 'kit-card available' : 'kit-card';
+    const ageText = `Ages ${kit.minAge}-${kit.maxAge}`;
 
     return `
     <div class="${cardClass}" data-id="${kit.id}" style="cursor:pointer;" onclick="window.location='${kit.page}'">
@@ -1272,7 +1315,8 @@ function renderKits(filter) {
         <div class="kit-name">${kit.name}</div>
         <div class="kit-meta">
           <span class="difficulty-badge ${diffClass}">${diffText}</span>
-          <span class="kit-deposit">🆓 Free to Borrow</span>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--text3);">${ageText}</span>
+          <span class="kit-deposit">🆓 Free</span>
         </div>
         <p class="kit-desc">${kit.desc}</p>
         <div class="kit-components">
@@ -1290,16 +1334,62 @@ function renderKits(filter) {
   }).join('');
 }
 
-function filterKits(filter, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+function applyFilters() {
+  activeFilters.search = (document.getElementById('kit-search')?.value || '').toLowerCase().trim();
+
+  const filtered = kits.filter(k => {
+    // Difficulty
+    if (activeFilters.difficulty !== 'all' && k.difficulty !== activeFilters.difficulty) return false;
+    // Availability
+    if (activeFilters.avail === 'available' && !k.available) return false;
+    // Age — kit matches if the selected age bracket overlaps the kit's range
+    if (activeFilters.age !== 'all') {
+      const a = parseInt(activeFilters.age);
+      const brackets = { 5: [5,7], 8: [8,10], 11: [11,14] };
+      const [lo, hi] = brackets[a];
+      // overlap check
+      if (k.maxAge < lo || k.minAge > hi) return false;
+    }
+    // Search
+    if (activeFilters.search && !k.name.toLowerCase().includes(activeFilters.search)) return false;
+    return true;
+  });
+
+  renderKits(filtered);
+}
+
+function setDifficulty(val, btn) {
+  activeFilters.difficulty = val;
+  document.querySelectorAll('[data-difficulty]').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  renderKits(filter);
+  applyFilters();
+}
+
+function setAge(val, btn) {
+  activeFilters.age = val;
+  document.querySelectorAll('[data-age]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function setAvail(val, btn) {
+  activeFilters.avail = val;
+  document.querySelectorAll('[data-avail]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function resetFilters() {
+  activeFilters = { difficulty: 'all', age: 'all', avail: 'all', search: '' };
+  document.getElementById('kit-search').value = '';
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('[data-difficulty="all"],[data-age="all"],[data-avail="all"]').forEach(b => b.classList.add('active'));
+  applyFilters();
 }
 
 function openVideo(kitId) {
   const kit = kits.find(k => k.id === kitId);
   if (!kit) return;
-  // Extract video ID from embed URL, handle ?si= and other params
   const videoId = kit.videoUrl.split('/embed/')[1].split('?')[0].split('&')[0];
   window.open('https://www.youtube.com/watch?v=' + videoId, '_blank');
 }
@@ -1318,7 +1408,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeVideoModal();
 });
 
-renderKits('all');
+applyFilters();
 </script>
 
 <script data-goatcounter="https://innovationlibrary.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
