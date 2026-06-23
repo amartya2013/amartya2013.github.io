@@ -383,6 +383,44 @@
  margin-left: 3px;
  }
 
+ .wishlist-btn {
+ position: absolute;
+ top: 10px;
+ left: 10px;
+ width: 36px; height: 36px;
+ border-radius: 50%;
+ background: rgba(10,15,31,0.7);
+ backdrop-filter: blur(4px);
+ border: 1px solid var(--border2);
+ cursor: pointer;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ transition: all 0.2s;
+ padding: 0;
+ z-index: 3;
+ }
+ .wishlist-btn svg {
+ width: 18px; height: 18px;
+ fill: none;
+ stroke: var(--text2);
+ stroke-width: 2;
+ transition: all 0.2s;
+ }
+ .wishlist-btn:hover {
+ border-color: var(--accent);
+ transform: scale(1.1);
+ }
+ .wishlist-btn:hover svg { stroke: var(--accent); }
+ .wishlist-btn.active {
+ background: var(--accent);
+ border-color: var(--accent);
+ }
+ .wishlist-btn.active svg {
+ fill: #fff;
+ stroke: #fff;
+ }
+
  .kit-status-badge {
  position: absolute;
  top: 10px;
@@ -779,6 +817,7 @@
  <li><a href="#kits">Browse Kits</a></li>
  <li><a href="#how">How It Works</a></li>
  <li><a href="#contact">Contact</a></li>
+ <li><a href="#kits" onclick="showWishlist()" style="display:inline-flex;align-items:center;gap:6px;">♥ Wishlist <span id="wishlist-count" style="display:none;align-items:center;justify-content:center;min-width:18px;height:18px;background:var(--accent);color:#fff;border-radius:9px;font-size:10px;padding:0 5px;">0</span></a></li>
  <li><a href="#borrow" class="nav-cta">Borrow a Kit</a></li>
  </ul>
 </nav>
@@ -878,6 +917,7 @@
  <div class="filter-bar" style="display:inline-flex;margin-bottom:0;">
  <button class="filter-btn active" data-avail="all" onclick="setAvail('all', this)">All</button>
  <button class="filter-btn" data-avail="available" onclick="setAvail('available', this)">Available Now</button>
+ <button class="filter-btn" data-avail="wishlist" onclick="setAvail('wishlist', this)">♥ My Wishlist</button>
  </div>
  </div>
 
@@ -1277,6 +1317,40 @@ function getThumbnail(videoUrl) {
  return id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : null;
 }
 
+// ── Wishlist (in-memory for session) ──
+let wishlist = new Set();
+
+function toggleWishlist(kitId) {
+  if (wishlist.has(kitId)) {
+    wishlist.delete(kitId);
+  } else {
+    wishlist.add(kitId);
+  }
+  updateWishlistCount();
+  applyFilters();
+}
+
+function updateWishlistCount() {
+  const el = document.getElementById('wishlist-count');
+  if (el) {
+    el.textContent = wishlist.size;
+    el.style.display = wishlist.size > 0 ? 'inline-flex' : 'none';
+  }
+}
+
+function showWishlist() {
+  if (wishlist.size === 0) {
+    alert('Your wishlist is empty! Tap the heart on any kit to add it.');
+    return;
+  }
+  activeFilters.avail = 'wishlist';
+  document.querySelectorAll('[data-avail]').forEach(b => b.classList.remove('active'));
+  const wbtn = document.querySelector('[data-avail="wishlist"]');
+  if (wbtn) wbtn.classList.add('active');
+  applyFilters();
+  document.getElementById('kits').scrollIntoView({behavior:'smooth'});
+}
+
 // ── Multi-filter state ──
 let activeFilters = { difficulty: 'all', age: 'all', avail: 'all', search: '' };
 
@@ -1312,6 +1386,9 @@ function renderKits(list) {
  </div>
  </div>
  <span class="kit-status-badge ${statusClass}">${statusText}</span>
+ <button class="wishlist-btn ${wishlist.has(kit.id) ? 'active' : ''}" onclick="event.stopPropagation();toggleWishlist(${kit.id})" title="Add to wishlist">
+ <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+ </button>
  </div>
  <div class="kit-body">
  <div class="kit-name">${kit.name}</div>
@@ -1344,6 +1421,7 @@ function applyFilters() {
  if (activeFilters.difficulty !== 'all' && k.difficulty !== activeFilters.difficulty) return false;
  // Availability
  if (activeFilters.avail === 'available' && !k.available) return false;
+ if (activeFilters.avail === 'wishlist' && !wishlist.has(k.id)) return false;
  // Age — kit matches if the selected age bracket overlaps the kit's range
  if (activeFilters.age !== 'all') {
  const a = parseInt(activeFilters.age);
@@ -1411,6 +1489,7 @@ document.addEventListener('keydown', e => {
 });
 
 applyFilters();
+updateWishlistCount();
 </script>
 
 <script data-goatcounter="https://innovationlibrary.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
