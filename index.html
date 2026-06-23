@@ -816,6 +816,7 @@
  <ul class="nav-links">
  <li><a href="#kits">Browse Kits</a></li>
  <li><a href="#how">How It Works</a></li>
+ <li><a href="#faq">FAQ</a></li>
  <li><a href="#contact">Contact</a></li>
  <li><a href="#kits" onclick="showWishlist()" style="display:inline-flex;align-items:center;gap:6px;">♥ Wishlist <span id="wishlist-count" style="display:none;align-items:center;justify-content:center;min-width:18px;height:18px;background:var(--accent);color:#fff;border-radius:9px;font-size:10px;padding:0 5px;">0</span></a></li>
  <li><a href="#borrow" class="nav-cta">Borrow a Kit</a></li>
@@ -1112,6 +1113,29 @@ fetch('https://innovationlibrary.goatcounter.com/counter//.json')
  </div>
 </section>
 
+<!-- FAQ SECTION -->
+<section id="faq">
+  <div class="section-header">
+    <span class="section-label">// FAQ</span>
+    <h2 class="section-title">Questions & Answers</h2>
+  </div>
+
+  <div id="faq-list" style="display:flex;flex-direction:column;gap:12px;max-width:820px;">
+    <div style="font-family:var(--mono);font-size:13px;color:var(--text3);padding:20px;">Loading questions...</div>
+  </div>
+
+  <!-- Ask a question -->
+  <div style="margin-top:32px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px 32px;max-width:820px;">
+    <div style="font-family:var(--mono);font-size:14px;color:var(--accent);margin-bottom:8px;letter-spacing:0.04em;">Have a question?</div>
+    <p style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:18px;">
+      Ask anything about borrowing, the kits, or how it all works. Amartya will answer and add common questions here!
+    </p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfsGoI-DVk90znOG_FWOKbPMZRtqfQmxhbnXWk5UNysAlrIvQ/viewform" target="_blank" class="btn-primary" style="display:inline-block;text-decoration:none;">
+      Ask a Question
+    </a>
+  </div>
+</section>
+
 <!-- CONTACT SECTION -->
 <section id="contact">
  <div class="section-header">
@@ -1320,6 +1344,57 @@ function getThumbnail(videoUrl) {
 // ── Wishlist (in-memory for session) ──
 let wishlist = new Set();
 
+// ── FAQ: load answered questions from Google Sheet ──
+const FAQ_SHEET_ID = '1iT8oQJyJye3AwetkeMvHy6V5rALee4pLRWoN4dc8tzE';
+function loadFAQ() {
+  const faqList = document.getElementById('faq-list');
+  if (!faqList) return;
+  if (FAQ_SHEET_ID === 'FAQ_SHEET_ID_HERE') {
+    faqList.innerHTML = '<div style="font-family:var(--mono);font-size:13px;color:var(--text3);padding:20px;">No questions yet — be the first to ask below!</div>';
+    return;
+  }
+  const url = `https://docs.google.com/spreadsheets/d/${FAQ_SHEET_ID}/gviz/tq?tqx=out:json`;
+  fetch(url)
+    .then(r => r.text())
+    .then(text => {
+      const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
+      const rows = json.table.rows;
+      // Only show rows where both question (col 0) and answer (col 1) are filled
+      const answered = rows.filter(r => r.c[0]?.v && r.c[1]?.v);
+      if (answered.length === 0) {
+        faqList.innerHTML = '<div style="font-family:var(--mono);font-size:13px;color:var(--text3);padding:20px;">No questions answered yet — be the first to ask below!</div>';
+        return;
+      }
+      faqList.innerHTML = answered.map((r, i) => {
+        const q = r.c[0].v;
+        const a = r.c[1].v;
+        return `
+        <div class="faq-item" style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
+          <button onclick="toggleFAQ(${i})" style="width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px;">
+            <span style="font-family:var(--mono);font-size:14px;color:var(--text);letter-spacing:0.02em;">${q}</span>
+            <span id="faq-icon-${i}" style="font-family:var(--mono);font-size:18px;color:var(--accent);flex-shrink:0;">+</span>
+          </button>
+          <div id="faq-answer-${i}" style="display:none;padding:0 22px 18px;font-size:14px;color:var(--text2);line-height:1.7;">${a}</div>
+        </div>`;
+      }).join('');
+    })
+    .catch(() => {
+      faqList.innerHTML = '<div style="font-family:var(--mono);font-size:13px;color:var(--text3);padding:20px;">Questions will appear here soon!</div>';
+    });
+}
+
+function toggleFAQ(i) {
+  const ans = document.getElementById('faq-answer-' + i);
+  const icon = document.getElementById('faq-icon-' + i);
+  if (ans.style.display === 'none') {
+    ans.style.display = 'block';
+    icon.textContent = '−';
+  } else {
+    ans.style.display = 'none';
+    icon.textContent = '+';
+  }
+}
+
 function toggleWishlist(kitId) {
   if (wishlist.has(kitId)) {
     wishlist.delete(kitId);
@@ -1490,6 +1565,7 @@ document.addEventListener('keydown', e => {
 
 applyFilters();
 updateWishlistCount();
+loadFAQ();
 </script>
 
 <script data-goatcounter="https://innovationlibrary.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
