@@ -659,6 +659,82 @@
  </div>
 </div>
 
+
+<!-- REVIEWS SECTION -->
+<div class="deposit-section" id="reviews-section">
+  <div class="video-header">
+    <span class="video-label">// Reviews</span>
+    <h2 class="video-title">What Kids Are Saying</h2>
+  </div>
+
+  <div id="reviews-summary" style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+    <span style="font-family:var(--mono);font-size:13px;color:var(--text3);">Loading reviews...</span>
+  </div>
+
+  <div id="reviews-list" style="display:flex;flex-direction:column;gap:12px;"></div>
+
+  <div style="margin-top:24px;">
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdKHE4ncwdon53Nf3jrmgUjgXSUqEIUTdhXNPMGedA6gyUP7Q/viewform" target="_blank" class="btn-secondary" style="display:inline-block;text-decoration:none;">★ Leave a Review</a>
+  </div>
+</div>
+
+<script>
+(function() {
+  const KIT_NAME = 'SnapCircuit';
+  const SHEET_ID = "1CKO4sEulV18C6NJYs4VXLNjRtK22-o9Qma_KCigVDpA";
+  const url = "https://docs.google.com/spreadsheets/d/" + SHEET_ID + "/gviz/tq?tqx=out:json";
+
+  function starStr(n) {
+    n = Math.round(n);
+    return "★★★★★".slice(0, n) + "☆☆☆☆☆".slice(0, 5 - n);
+  }
+
+  fetch(url)
+    .then(r => r.text())
+    .then(text => {
+      const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
+      const rows = json.table.rows;
+      // Columns: 0=Timestamp, 1=Name, 2=Which Kit, 3=Rating, 4=Review, 5=Approved
+      const reviews = rows.filter(r => {
+        const kit = r.c[2] && r.c[2].v;
+        const approved = r.c[5] && r.c[5].v;
+        return kit === KIT_NAME && approved && String(approved).toLowerCase() === "yes";
+      }).map(r => ({
+        name: (r.c[1] && r.c[1].v) || "Anonymous",
+        rating: parseInt((r.c[3] && r.c[3].v) || 5),
+        text: (r.c[4] && r.c[4].v) || ""
+      }));
+
+      const summary = document.getElementById("reviews-summary");
+      const list = document.getElementById("reviews-list");
+
+      if (reviews.length === 0) {
+        summary.innerHTML = '<span style="font-family:var(--mono);font-size:13px;color:var(--text3);">No reviews yet — be the first to leave one!</span>';
+        return;
+      }
+
+      const avg = reviews.reduce((s, r) => s + r.rating, 0) / reviews.length;
+      summary.innerHTML =
+        '<span style="font-family:var(--mono);font-size:2rem;color:var(--accent);letter-spacing:0.1em;">' + starStr(avg) + '</span>' +
+        '<span style="font-family:var(--mono);font-size:1.2rem;color:var(--text);">' + avg.toFixed(1) + '</span>' +
+        '<span style="font-family:var(--mono);font-size:12px;color:var(--text3);">(' + reviews.length + ' review' + (reviews.length > 1 ? 's' : '') + ')</span>';
+
+      list.innerHTML = reviews.map(r =>
+        '<div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 22px;">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">' +
+            '<span style="font-family:var(--mono);font-size:14px;color:var(--text);">' + r.name + '</span>' +
+            '<span style="font-family:var(--mono);font-size:14px;color:var(--accent);letter-spacing:0.08em;">' + starStr(r.rating) + '</span>' +
+          '</div>' +
+          '<p style="font-size:14px;color:var(--text2);line-height:1.7;">' + r.text + '</p>' +
+        '</div>'
+      ).join("");
+    })
+    .catch(() => {
+      document.getElementById("reviews-summary").innerHTML = '<span style="font-family:var(--mono);font-size:13px;color:var(--text3);">Reviews will appear here soon!</span>';
+    });
+})();
+</script>
+
 <!-- DISCLAIMER -->
 <div style="max-width:1100px;margin:0 auto;padding:0 2rem;">
  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:14px 20px;display:flex;align-items:flex-start;gap:10px;">
